@@ -400,10 +400,22 @@ set list
 " Zvýrazne zbytočných medzier
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufWinEnter *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd InsertEnter *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
-autocmd InsertLeave *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinLeave *.php,*.cpp,*.h,*,py call clearmatches()
+autocmd BufWinEnter *php match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd InsertEnter *php match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
+autocmd InsertLeave *php match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd BufWinLeave *php call clearmatches()
+autocmd BufWinEnter *cpp match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd InsertEnter *cpp match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
+autocmd InsertLeave *cpp match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd BufWinLeave *cpp call clearmatches()
+autocmd BufWinEnter *h match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd InsertEnter *h match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
+autocmd InsertLeave *h match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd BufWinLeave *h call clearmatches()
+autocmd BufWinEnter *python match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd InsertEnter *python match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
+autocmd InsertLeave *python match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd BufWinLeave *python call clearmatches()
 
 
 " Zvýraznenie aktuálneho riadku (môže byť pomalé)
