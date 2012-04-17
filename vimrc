@@ -37,6 +37,7 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Načítanie pathogen-u
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+runtime bundle/vim-pathogen/autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
