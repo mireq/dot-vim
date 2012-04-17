@@ -403,8 +403,7 @@ autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd BufWinEnter *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+$\| \+\ze\t/
 autocmd InsertEnter *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
 autocmd InsertLeave *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinLeave *.php,*.cpp,*.h,*,py call
-call clearmatches()
+autocmd BufWinLeave *.php,*.cpp,*.h,*,py call clearmatches()
 
 
 " Zvýraznenie aktuálneho riadku (môže byť pomalé)
