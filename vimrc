@@ -89,7 +89,7 @@ set number
 set conceallevel=2
 
 " Zapneme možnosť používania : v kľúčových slovách jazyka
-"set iskeyword=@,~,48-57,_,192-255, 
+"set iskeyword=@,~,48-57,_,192-255, "
 set iskeyword=@,~,48-57,_,192-255
 
 " Automatický presun na hľadaný výraz počas písania
@@ -306,6 +306,18 @@ if (&t_Co == 256) || has("gui_running")
 	let g:Powerline_symbols="fancy"
 	" Pridanie informácie o prázdnych riadkoch
 	call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+
+	" Zmena zvýrazňovania chybného bieleho miesta
+	function! Powerline#Functions#GetWSMarker() " {{{
+		if ! exists("b:statusline_trailing_space_warning")
+			if search('\s\+$\| \+\ze\t', 'nw') != 0
+				let b:statusline_trailing_space_warning = ' … '
+			else
+				let b:statusline_trailing_space_warning = ''
+			endif
+		endif
+		return b:statusline_trailing_space_warning
+	endfunction " }}}
 else
 	" Nastavenie stavového riadku
 	set statusline=%<%f\ \%y\ %h%w%m%r\ %*
@@ -317,7 +329,7 @@ else
 	"               | |    + Typ súboru
 	"               | + Súbor
 	"               + Indikátor pretečenia textu stavového riadku
-	"set statusline+=%(\{%{Tlist_Get_Tagname_By_Line()}\}%)\ 
+	"set statusline+=%(\{%{Tlist_Get_Tagname_By_Line()}\}%)\ %*
 	"                     |
 	"                     + Zobrazenie aktuálneho tagu
 	set statusline+=%(\{%{TagStatus()}\}%)\ %*
