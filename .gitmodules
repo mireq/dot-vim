@@ -28,3 +28,6 @@
 [submodule "bundle/vim-bufferlist"]
 	path = bundle/vim-bufferlist
 	url = git://github.com/rockpiper/vim-bufferlist.git
+[submodule "bundle/errormarker"]
+	path = bundle/errormarker
+	url = git://github.com/vim-scripts/errormarker.vim.git
