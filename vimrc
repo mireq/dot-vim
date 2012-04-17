@@ -266,6 +266,19 @@ if has("gui_running")
 	set guioptions-=T
 endif
 
+if (&t_Co == 256) || has("gui_running")
+	colorscheme moja
+else
+	colorscheme default
+endif
+
+" Zobrazenie symbolov pre oddelenie okien
+if has("multi_byte")
+	set fillchars=stl:\ ,stlnc:\ ,vert:┆,fold:-,diff:-
+else
+	set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
+endif
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "   => Stavový riadok
@@ -287,47 +300,52 @@ function! TagStatus()
 	endif
 endfunction
 
-" Nastavenie stavového riadku
-set statusline=%<%f\ \%y\ %h%w%m%r\ 
-"               | |    |   | | | |
-"               | |    |   | | | + Len na čítanie
-"               | |    |   | | + Modifikovaný
-"               | |    |   | + Náhľadové okno
-"               | |    |   + Help okno
-"               | |    + Typ súboru
-"               | + Súbor
-"               + Indikátor pretečenia textu stavového riadku
-"set statusline+=%(\{%{Tlist_Get_Tagname_By_Line()}\}%)\ 
-"                     |
-"                     + Zobrazenie aktuálneho tagu
-set statusline+=%(\{%{TagStatus()}\}%)\ 
-"                     |
-"                     + Zobrazenie aktuálneho tagu
-set statusline+=%=%-13.(%l/%L,%c%V%)\ %P\ 
-"                | |     |  |  | |     |
-"                | |     |  |  | |     + Percentuálne vyjadrenie polohy v súbore
-"                | |     |  |  | + Virtuálne číslo stĺpca
-"                | |     |  |  + Číslo stĺpca
-"                | |     |  + Celkový počet riadkov
-"                | |     + Číslo riadku
-"                | + Minimálna šírka nasledujúceho výrazu 13 znakov
-"                + Prechod na zarovnanie vpravo
-set statusline+=%05.(%{VimBuddy()}%)\ 
-"                |     |
-"                |     + Smajlík
-"                + Minimálna šírka 5 znakov
+if (&t_Co == 256) || has("gui_running")
+	" Symboly s podporou opatchovaného fontu
+	let g:Powerline_symbols="fancy"
+	" Pridanie informácie o prázdnych riadkoch
+	call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+else
+	" Nastavenie stavového riadku
+	set statusline=%<%f\ \%y\ %h%w%m%r\ %*
+	"               | |    |   | | | |
+	"               | |    |   | | | + Len na čítanie
+	"               | |    |   | | + Modifikovaný
+	"               | |    |   | + Náhľadové okno
+	"               | |    |   + Help okno
+	"               | |    + Typ súboru
+	"               | + Súbor
+	"               + Indikátor pretečenia textu stavového riadku
+	"set statusline+=%(\{%{Tlist_Get_Tagname_By_Line()}\}%)\ 
+	"                     |
+	"                     + Zobrazenie aktuálneho tagu
+	set statusline+=%(\{%{TagStatus()}\}%)\ %*
+	"                     |
+	"                     + Zobrazenie aktuálneho tagu
+	set statusline+=%=%-13.(%l/%L,%c%V%)\ %P\ %*
+	"                | |     |  |  | |     |
+	"                | |     |  |  | |     + Percentuálne vyjadrenie polohy v súbore
+	"                | |     |  |  | + Virtuálne číslo stĺpca
+	"                | |     |  |  + Číslo stĺpca
+	"                | |     |  + Celkový počet riadkov
+	"                | |     + Číslo riadku
+	"                | + Minimálna šírka nasledujúceho výrazu 13 znakov
+	"                + Prechod na zarovnanie vpravo
+	set statusline+=%05.(%{VimBuddy()}%)\ %*
+	"                |     |
+	"                |     + Smajlík
+	"                + Minimálna šírka 5 znakov
 
 
-" Žltý stavový riadok počas editácie
-autocmd InsertEnter * hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=3 guifg=#ffff00 guibg=#000000 gui=bold
+	" Žltý stavový riadok počas editácie
+	autocmd InsertEnter * hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=3 guifg=#ffff00 guibg=#000000 gui=bold
 
-" Zelený stavový riadok po skončení editácie
-autocmd InsertLeave * hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=2 guifg=#00ff00 guibg=#000000 gui=bold
+	" Zelený stavový riadok po skončení editácie
+	autocmd InsertLeave * hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=2 guifg=#00ff00 guibg=#000000 gui=bold
 
-let g:Powerline_symbols="fancy"
-
-" call Pl#Theme#InsertSegment(['vimbuddy:raw.line', '%03.(%{VimBuddy()}%)'], 'before', 'rvm:string')
-call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
+	" Nastavenie stavového riadku po spustení
+	hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=2 guifg=#00ff00 guibg=#000000 gui=bold
+endif
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -381,15 +399,19 @@ set list
 " Zvýrazne zbytočných medzier
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufWinEnter *.cpp match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t/
-autocmd BufWinEnter *.h match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t/
+autocmd BufWinEnter *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd InsertEnter *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
+autocmd InsertLeave *.php,*.cpp,*.h,*,py match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd BufWinLeave *.php,*.cpp,*.h,*,py call
+call clearmatches()
+
 
 " Zvýraznenie aktuálneho riadku (môže byť pomalé)
-au WinLeave * set nocursorline
-au WinEnter * set cursorline
+"au WinLeave * set nocursorline
+"au WinEnter * set cursorline
 " Zobrazenie aktuálneho riadku aj stĺpca (je pomalé!)
 "au WinEnter * set cursorline cursorcolumn
-set cursorline
+"set cursorline
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -397,25 +419,13 @@ set cursorline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Nastavenie vlastností doplňovania pre C++
-let OmniCpp_NamespaceSearch = 2
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_MayCompleteDot = 0
-let OmniCpp_MayCompleteArrow = 0
-let OmniCpp_MayCompleteScope = 0
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-let OmniCpp_ShowPrototypeInAbbr = 1
-let OmniCpp_SelectFirstItem = 0
-"let g:clang_user_options="-I/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.2/include/g++-v4/ -I/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.2/include/g++-v4/x86_64-pc-linux-gnu -I/usr/local/qt4/include -I/usr/local/qt4/include/QtOpenGL -I/usr/local/qt4/include/QtDeclarative -I/usr/local/qt4/include/QtGui -I/usr/local/qt4/include/QtXml -I/usr/local/qt4/include/QtCore -I/usr/local/qt4/include/QtDesigner -I/usr/local/qt4/include/QtScriptTools -I/usr/local/qt4/include/QtDBus -I/usr/local/qt4/include/QtSql -I/usr/local/qt4/include/QtMultimedia -I/usr/local/qt4/include/QtNetwork -I/usr/local/qt4/include/phonon -I/usr/local/qt4/include/QtXmlPatterns -I/usr/local/qt4/include/QtWebKit -I/usr/local/qt4/include/QtHelp -I/usr/local/qt4/include/QtUiTools -I/usr/local/qt4/include/QtTest -I/usr/local/qt4/include/QtScript -I/usr/local/qt4/include/QtSvg -I/usr/local/qt4/include/Qt3Support -I/usr/local/qt4/mkspecs/default -I/usr/include/boost-1_42 -I/home/mirec/Documents/Skola/diplomka/facedetector/src"
 "let g:clang_user_options="-std=gnu++0x -U__STRICT_ANSI__ -U__GXX_EXPERIMENTAL_CXX0X__ -pedantic -Wall -Wextra"
 let g:clang_user_options="-std=gnu++0x -D__linux__ -U__STRICT_ANSI__ -U__GXX_EXPERIMENTAL_CXX0X__  -pedantic -Wall -Wextra -I/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.2/include/g++-v4/ -I/usr/lib/gcc/x86_64-pc-linux-gnu/4.5.2/include/g++-v4/x86_64-pc-linux-gnu -I/usr/include/qt4 -I/usr/include/qt4/QtOpenGL -I/usr/include/qt4/QtDeclarative -I/usr/include/qt4/QtGui -I/usr/include/qt4/QtXml -I/usr/include/qt4/QtCore -I/usr/include/qt4/QtDesigner -I/usr/include/qt4/QtScriptTools -I/usr/include/qt4/QtDBus -I/usr/include/qt4/QtSql -I/usr/include/qt4/QtMultimedia -I/usr/include/qt4/QtNetwork -I/usr/include/qt4/phonon -I/usr/include/qt4/QtXmlPatterns -I/usr/include/qt4/QtWebKit -I/usr/include/qt4/QtHelp -I/usr/include/qt4/QtUiTools -I/usr/include/qt4/QtTest -I/usr/include/qt4/QtScript -I/usr/include/qt4/QtSvg -I/usr/include/qt4/Qt3Support -I/usr/local/qt4/mkspecs/default -I/usr/include/boost-1_42 -I/home/mirec/Documents/Praca/cpp/jukebox/src -I/home/mirec/Documents/Praca/cpp/jukebox/src/gui/widgets "
 let g:clang_use_library=1
 let g:clang_library_path="/usr/lib64/llvm"
 let g:clang_snippets=1
-"let g:clang_snippets_engine="dummy"
 let g:clang_conceal_snippets=1
 let g:clang_periodic_quickfix=1
-"let g:clang_debug=1
 let g:clang_hl_errors=1
 
 set completeopt=menuone,menu
@@ -438,13 +448,23 @@ imap <Nul> <C-X><C-I>
 "   => Tagy
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Načítanie súborov s tagmi
-set tags+=~/.vim/tags/cpp
-set tags+=~/.vim/tags/qt4
-set tags+=./tags
+" Načítanie súborov s tagmi (alternatíva k CLang)
+" set tags+=~/.vim/tags/cpp
+" set tags+=~/.vim/tags/qt4
+" set tags+=./tags
+
+" let OmniCpp_NamespaceSearch = 2
+" let OmniCpp_GlobalScopeSearch = 1
+" let OmniCpp_ShowAccess = 1
+" let OmniCpp_MayCompleteDot = 0
+" let OmniCpp_MayCompleteArrow = 0
+" let OmniCpp_MayCompleteScope = 0
+" let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
+" let OmniCpp_ShowPrototypeInAbbr = 1
+" let OmniCpp_SelectFirstItem = 0
 
 " Znovuvytvorenie tagov po stlačení Ctrl+F12
-map <C-F12> :!ctags --sort=yes -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+" map <C-F12> :!ctags --sort=yes -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -489,7 +509,6 @@ vmap ; <ESC>`>a“<ESC>`<i„<ESC>gv
 
 " Reverzné poradie znakov
 vmap \rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
-vmap \ue !php -r 'echo urlencode(file_get_contents("php://stdin"));'<cr>
 
 
 " Uloženie súboru klávesovou skratkou Ctrl+S. Pre terminály je nutné spustiť
@@ -498,6 +517,8 @@ vmap \ue !php -r 'echo urlencode(file_get_contents("php://stdin"));'<cr>
 map <C-S> :w<CR>
 imap <C-S> <ESC><C-S>
 
+" Urlencode
+vmap \ue !php -r 'echo urlencode(file_get_contents("php://stdin"));'<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Skratky pre pluginy
@@ -521,13 +542,16 @@ if !hasmapto('<Plug>ToggleProject')
 	nmap <silent> <F8> <Plug>ToggleProject
 endif
 
-"vmap \adox :Align /\*\*< \*\/<CR>:'<,'>s /\s\+$//<CR>
+" Zarovnanie komentárov pre doxygen
 vmap \adox :Align! lp1P0 "\\\\/\*\*< " "\*/"<CR>
 
 " Zoznamy
 nmap \check cl✔<esc>
 nmap \uncheck cl✗<esc>
 nmap \partcheck cl◉<esc>
+
+" Spustenie make
+map <F9> :make -j 2<CR>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -742,11 +766,10 @@ autocmd BufNewFile *.cpp,*.h,*.c execute "set paste" | execute "normal i/*\r * =
 autocmd BufNewFile *.php execute "set paste" | execute "normal i<?php\r/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  CreaNet\r * =====================================================================\r */\r?>\r" | execute "set nopaste"
 autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
 
-function! RunDesigner()
-	!designer -style Skulpture %&
-endfunction
 " ui súbory
-
+function! RunDesigner()
+	!designer %&
+endfunction
 autocmd BufWinEnter *ui :call RunDesigner()
 
 let g:pep8_map='<leader>8' "python
@@ -767,7 +790,6 @@ autocmd FileType c,cpp nmap <F6> :set paste<CR>ma:let @n=@/<CR>"lp==:s/\<virtual
 " Spoločné nastavenia pre jazyky syntakticky podobné C
 " autocmd FileType c,cpp,java,php map <buffer> <F9> :make -j 2<CR>
 autocmd FileType php set smartindent
-map <F9> :make -j 2<CR>
 autocmd FileType c,cpp,java,php,python,html,css,javascript imap <C-Space> <C-X><C-O>
 autocmd FileType c,cpp,java,php,python,html,css,javascript imap <Nul> <C-X><C-O>
 
@@ -858,7 +880,7 @@ autocmd Filetype java setlocal completefunc=javacomplete#Complete
 " Nastavenia pre python
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
-autocmd FileType python setlocal tags+=$HOME/.vim/tags/python
+"autocmd FileType python setlocal tags+=$HOME/.vim/tags/python
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType python setlocal completefunc=pythoncomplete#Complete
 autocmd BufRead *.py setlocal makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
