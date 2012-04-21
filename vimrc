@@ -236,10 +236,11 @@ function! TabUnindent() range
 endfunction
 
 " Odsadenie klávesou tab vo vizuálnom režime
-xmap <Tab> >gv
+xnoremap <Tab> >gv
+au BufEnter * xnoremap <Tab> >gv
 
 " Zrušenie odsadenia klávesou backspace vo vizuálnom režime
-xmap <BS> <gv
+xnoremap <BS> <gv
 
 " Zmena odsadenia na tabulátory
 command! RetabIndents call RetabIndents()
