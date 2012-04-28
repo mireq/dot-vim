@@ -449,8 +449,7 @@ let g:clang_user_options="-std=gnu++0x -D__linux__ -U__STRICT_ANSI__ -U__GXX_EXP
 let g:clang_use_library=1
 let g:clang_library_path="/usr/lib/llvm"
 let g:clang_snippets=1
-let g:clang_snippets_engine='garbas_snipmate'
-"let g:clang_snippets_engine='dummy'
+let g:clang_snippets_engine='ultisnips'
 let g:clang_conceal_snippets=1
 let g:clang_periodic_quickfix=1
 let g:clang_hl_errors=1
@@ -685,9 +684,11 @@ let g:proj_flags="imstvcS"
 "                 |+ Povolenie Ctrl+W O
 "                 + Zobrazenie súboru a adresára v príkazovom riadku pri výbere
 
-" Nastavenie autora pre SnipMate
+" Nastavenie autora pre Ultisnips
 let g:snips_author = "Miroslav Bendík"
 let g:snips_company = "LinuxOS.sk"
+let g:UltiSnipsExpandTrigger="<TAB>"
+let g:UltiSnipsJumpForwardTrigger="<TAB>"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -708,6 +709,9 @@ let errormarker_erroricon = "/usr/kde/4.4/share/icons/oxygen/16x16/status/dialog
 let errormarker_warningicon = "/usr/kde/4.4/share/icons/oxygen/16x16/status/dialog-warning.png"
 "set errorformat+=In\ file\ included\ from\ %f:%l:%c\\,
 let &errorformat="%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c:,%-Gfrom %f:%l\\,,-Gfrom %f:%l:%c\\,," . &errorformat
+
+"Nastavenie lokálneho vimrc
+let g:local_vimrc = {'names':['.local.vimrc'],'hash_fun':'LVRHashOfFile'}
 
 " Vykonanie kontroly PHP súboru PHP interpreterom
 function! CheckPhp()
@@ -790,7 +794,7 @@ endfunction
 autocmd Syntax cpp call EnhanceCppSyntax()
 autocmd Syntax cpp hi doxygenEmphasisedWord ctermfg=250 cterm=bold
 autocmd BufNewFile *.cpp,*.h,*.c execute "set paste" | execute "normal i/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  ".g:snips_company."\r * =====================================================================\r */\r\r" | execute "set nopaste"
-autocmd BufNewFile *.php execute "set paste" | execute "normal i<?php\r/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  CreaNet\r * =====================================================================\r */\r?>\r" | execute "set nopaste"
+autocmd BufNewFile *.php execute "set paste" | execute "normal i<?php\r/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  LinusOS.sk\r * =====================================================================\r */\r?>\r" | execute "set nopaste"
 autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
 
 " ui súbory

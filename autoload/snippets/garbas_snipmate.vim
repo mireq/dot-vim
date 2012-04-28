@@ -23,7 +23,11 @@ function! snippets#garbas_snipmate#trigger()
 			execute "normal" (strlen(current_snip) - 1) . "dh"
 			let l:snip = ''
 			let l:prev_idx = 0
-			let l:snip_idx = 2
+			if len(s:args_pos[pos_idx]) == 0
+				let l:snip_idx = 1
+			else
+				let l:snip_idx = 2
+			endif
 			for elt in s:args_pos[pos_idx]
 				let l:snip .= current_snip[l:prev_idx : elt[0] - 1] . '${' . l:snip_idx . ':' . current_snip[elt[0] : elt[1] - 1] . '}'
 				let l:snip_idx += 1
@@ -31,9 +35,10 @@ function! snippets#garbas_snipmate#trigger()
 			endfor
 			let l:snip .= current_snip[l:prev_idx : ] . '${' . l:snip_idx . '}'
 			"put =getpos('.')[2]
+			let &undolevels = &undolevels " create new undo point
 			call snipMate#expandSnip("${1}".l:snip, getpos('.')[2] + 1)
 			call snippets#garbas_snipmate#reset()
-			break
+			return
 		endif
 		let l:pos_idx += 1
 	endfor

@@ -1,15 +1,9 @@
 [submodule "bundle/vim-pathogen"]
 	path = bundle/vim-pathogen
 	url = git://github.com/tpope/vim-pathogen.git
-[submodule "bundle/vim-snipmate"]
-	path = bundle/vim-snipmate
-	url = git://github.com/garbas/vim-snipmate.git
 [submodule "bundle/vim-addon-mw-utils"]
 	path = bundle/vim-addon-mw-utils
 	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "bundle/snipmate-snippets"]
-	path = bundle/snipmate-snippets
-	url = git://github.com/honza/snipmate-snippets.git
 [submodule "bundle/tlib"]
 	path = bundle/tlib
 	url = git://github.com/vim-scripts/tlib.git
@@ -46,3 +40,9 @@
 [submodule "bundle/zencoding-vim"]
 	path = bundle/zencoding-vim
 	url = git://github.com/mattn/zencoding-vim.git
+[submodule "bundle/ultisnips"]
+	path = bundle/ultisnips
+	url = git://github.com/vim-scripts/UltiSnips.git
+[submodule "bundle/vim-addon-local-vimrc"]
+	path = bundle/vim-addon-local-vimrc
+	url = git://github.com/MarcWeber/vim-addon-local-vimrc.git
