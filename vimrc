@@ -305,6 +305,7 @@ endfunction
 if (&t_Co == 256) || has("gui_running")
 	" Symboly s podporou opatchovaného fontu
 	let g:Powerline_symbols="fancy"
+	let g:Powerline_theme="default"
 	" Pridanie informácie o prázdnych riadkoch
 	call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
 
