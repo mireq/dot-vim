@@ -903,6 +903,7 @@ let PHP_autoformatcomment = 0
 " Funkcie pre doplňovanie v PHP
 autocmd FileType php set completefunc=phpcomplete#CompletePHP
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType php set completeopt=menuone,menu,preview
 
 " Nastavenia pra Javu
 autocmd FileType java set tags=~/.javatags
