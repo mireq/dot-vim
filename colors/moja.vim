@@ -23,9 +23,9 @@ hi Debug           ctermfg=181   guifg=#d7afaf gui=bold cterm=bold
 hi Define          ctermfg=229   guifg=#ffffaf gui=bold cterm=bold
 hi Delimiter       ctermfg=193   guifg=#d7ffaf
 hi DiffAdd         ctermbg=22    guibg=#005f00
-hi DiffChange      ctermbg=238   guibg=#444444
+hi DiffChange      ctermbg=24    guibg=#005f87
 hi DiffDelete      ctermfg=234   ctermbg=88    guifg=#1c1c1c guibg=#870000 cterm=none
-hi DiffText        ctermfg=231   ctermbg=232   guifg=#ffffff guibg=#080808 cterm=bold gui=bold
+hi DiffText        ctermfg=7     ctermbg=31    guifg=#ffffff guibg=#0087af cterm=bold gui=bold
 hi Directory       ctermfg=231   guifg=#ffffff gui=bold cterm=bold
 hi Error           ctermfg=231   ctermbg=9     guifg=#ffffff guibg=#ff0000
 hi ErrorMsg        ctermfg=0     ctermbg=6     guifg=#000000 guibg=#00cdcd
