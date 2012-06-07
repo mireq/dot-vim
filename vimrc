@@ -640,7 +640,7 @@ let c_no_curly_error=1
 let c_curly_error=1
 
 " Pri kopírovaní vo vim-e uloží do schránky
-set clipboard=unnamedplus
+set clipboard=unnamed,unnamedplus
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -795,7 +795,7 @@ endfunction
 autocmd Syntax cpp call EnhanceCppSyntax()
 autocmd Syntax cpp hi doxygenEmphasisedWord ctermfg=250 cterm=bold
 autocmd BufNewFile *.cpp,*.h,*.c execute "set paste" | execute "normal i/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  ".g:snips_company."\r * =====================================================================\r */\r\r" | execute "set nopaste"
-autocmd BufNewFile *.php execute "set paste" | execute "normal i<?php\r/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  LinusOS.sk\r * =====================================================================\r */\r?>\r" | execute "set nopaste"
+autocmd BufNewFile *.php execute "set paste" | execute "normal i<?php\r/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  LinuxOS.sk\r * =====================================================================\r */\r?>\r" | execute "set nopaste"
 autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
 
 " ui súbory
