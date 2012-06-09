@@ -651,8 +651,8 @@ set clipboard=unnamed,unnamedplus
 " Pozor - dosť pomalé
 "autocmd BufEnter * syntax sync fromstart
 
-" Aktualizácia syntaxe min. 200 riadkov mimo obrazovku
-syntax sync minlines=200
+" Aktualizácia syntaxe min. 500 riadkov mimo obrazovku
+syntax sync minlines=500
 
 " Optimalizácia pre rýchle terminálové spojenia
 set ttyfast
