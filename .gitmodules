@@ -28,9 +28,6 @@
 [submodule "bundle/vim-fugitive"]
 	path = bundle/vim-fugitive
 	url = git://github.com/tpope/vim-fugitive.git
-[submodule "bundle/taglist"]
-	path = bundle/taglist
-	url = git://github.com/vim-scripts/taglist.vim.git
 [submodule "bundle/pyflakes-vim"]
 	path = bundle/pyflakes-vim
 	url = git://github.com/kevinw/pyflakes-vim.git
@@ -52,3 +49,6 @@
 [submodule "bundle/phpcomplete"]
 	path = bundle/phpcomplete
 	url = git://github.com/shawncplus/phpcomplete.vim.git
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git

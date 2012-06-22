@@ -556,7 +556,7 @@ map <F12> :A<CR>
 imap <F12> <ESC>:A<CR>
 
 " Zobrazeniei okna TagList
-map <F11> :TlistToggle<CR>
+map <F11> :TagbarToggle<CR>
 
 " Zobrazenie mini buffer exploreru
 map <silent> <F3> :call BufferList()<CR>
