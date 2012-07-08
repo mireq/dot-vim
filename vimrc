@@ -46,6 +46,8 @@ call pathogen#helptags()
 " => Základné nastavenia
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+runtime $VIMHOME/localvimrc
+
 " Zákaz používania kurzorových kláves
 nnoremap  <Up> ""
 "nnoremap! <Up> <Esc>
@@ -685,8 +687,6 @@ let g:proj_flags="imstvcS"
 "                 + Zobrazenie súboru a adresára v príkazovom riadku pri výbere
 
 " Nastavenie autora pre Ultisnips
-let g:snips_author = "Miroslav Bendík"
-let g:snips_company = "LinuxOS.sk"
 let g:UltiSnipsExpandTrigger="<TAB>"
 let g:UltiSnipsJumpForwardTrigger="<TAB>"
 
@@ -939,3 +939,5 @@ function! Pythoncomplete2(findstart, base)
 	endif
 	return pythoncomplete#Complete(a:findstart, a:base)
 endfunction
+
+runtime local.vim
