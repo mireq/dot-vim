@@ -18,7 +18,13 @@ Install
     cd .vim
     git submodule init
     git submodule update
+    mkdir backup
+    mkdir spell
+    mkdir tmp
+    mkdir undodir
     "echo stty -ixon" >> .bashrc
+
+    vim local.vim
 
 Shortcuts
 ---------
