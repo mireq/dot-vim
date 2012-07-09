@@ -11,6 +11,16 @@ namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`}
 }${1/.+/ \/* /m}$1${1/.+/ *\//m}
 endsnippet
 
+snippet class "class"
+class ${1:`!v Filename('$1', 'class')`}${2}
+{
+public:
+	$1();
+	~$1();
+private:
+	${0:/* data */}
+}; /* -----  end of class $1  ----- */
+endsnippet
 
 snippet QObject "QObject"
 class ${1:`!v Filename('$1', 'class')`}: public ${2:QObject}
