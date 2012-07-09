@@ -37,7 +37,8 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Načítanie pathogen-u
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-runtime bundle/vim-pathogen/autoload/pathogen.vim
+set runtimepath+=$HOME/.vim/bundle/vim-pathogen/
+runtime autoload/pathogen.vim
 call pathogen#runtime_append_all_bundles()
 call pathogen#helptags()
 
@@ -45,8 +46,6 @@ call pathogen#helptags()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Základné nastavenia
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-runtime $VIMHOME/localvimrc
 
 " Zákaz používania kurzorových kláves
 nnoremap  <Up> ""
@@ -67,7 +66,7 @@ map <C-up> gk
 set nocompatible
 
 " Hľadanie nastavení v lokálnych súboroch
-set exrc
+"set exrc
 
 " Zapnutie zvýrazňovania syntaxe
 syntax on
@@ -613,7 +612,7 @@ endfunction
 " Predtým sa musia vygenerovať slovníky. Na generovanie sa používa štandardný
 " myspell slovník (napr. v /usr/share/myspell). Na vygenerovanie sa používa
 " mkspell.
-set spelllang=sk
+"set spelllang=sk
 
 " Automatický skok na prvú chybu
 set cf
