@@ -16,12 +16,15 @@ Install
     git clone https://github.com/mireq/dot-vim.git .vim
     ln -s ~/.vim/vimrc ~/.vimrc
     cd .vim
-    git submodule init
-    git submodule update
     mkdir backup
     mkdir spell
     mkdir tmp
     mkdir undodir
+    git submodule init
+    git submodule update
+    cd bundle/pyflakes-vim
+    git submodule init
+    git submodule update
     echo "stty -ixon" >> ~/.bashrc
 
     # locate libclang.so
