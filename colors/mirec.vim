@@ -129,3 +129,9 @@ hi todoPartSymbol  ctermfg=191 guifg=#D7FF5F
 hi todoOk          ctermfg=241 guifg=#626262
 hi todoBad         ctermfg=227 guifg=#FFFF87
 hi todoPart        ctermfg=136 guifg=#AF8700
+
+hi mailQuoted1     ctermfg=191
+hi mailQuoted2     ctermfg=94
+hi mailQuoted3     ctermfg=24
+hi mailQuoted4     ctermfg=88
+

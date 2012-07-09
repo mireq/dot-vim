@@ -927,4 +927,59 @@ function! Pythoncomplete2(findstart, base)
 	return pythoncomplete#Complete(a:findstart, a:base)
 endfunction
 
+function! MailSettings()
+	setlocal textwidth=72
+	setlocal comments+=b:--
+	setlocal formatoptions+=tcqan
+	" setlocal nosi nocin
+	" setlocal comments=n:>
+	" setlocal equalprg=fmt
+	" Odstránenie starých podpisov
+	" autocmd BufReadPost /tmp/mutt* :g/^> -- $/.;/^$/-d
+	try | :%s/>> -- $\n\(>> .*\n\)*// | catch | endtry
+	try | :%s/> -- $\n\(> .*\n\)*// | catch | endtry
+	" Zmena zlého formátu citácií
+	try | :%s/^> >/>> / | catch | endtry
+	try | :%s/^>> >/>>> / | catch | endtry
+	try | :%s/^>>> >/>>>> / | catch | endtry
+	" Odstránenie prebytočných riadkov
+	try | %s/\(^>\n\)\{2,}/>\r/g | catch | endtry
+	" Presun nad pätičku
+	normal 0G
+	normal 8k
+
+	setlocal ignorecase infercase
+	setlocal wrap
+	setlocal nocp
+	let @/ = '^>[ \t]*$'
+
+	let b:url_nr = 1
+	vmap <buffer> . c> [[...]<Esc>
+	" insert mode mappings
+	imap <buffer> <C-l> <ESC>:call MailInsertURL()<CR>
+	"map <buffer> <F2> :%g/^>\( \?>\)/d<CR>
+	"map <buffer> <F3> :%g/^>\( \?>\)\{2}/d<CR>
+	"map <buffer> <F4> :%g/^>\( \?>\)\{3}/d<CR>
+	map <buffer> <leader>q :%s/=\(\x\x\)/\=nr2char(str2nr(submatch(1),16))/g<CR>
+
+	function! MailInsertURL()
+		set paste
+		let l:url = input("URL: ")
+		execute "normal a[".b:url_nr."]\<Esc>mzG"
+		try
+			execute "?^-- $"
+			if b:url_nr == 1
+				normal 0k
+			else
+				normal k
+			endif
+		catch
+		endtry
+		execute "normal o[".b:url_nr."] ".l:url."\<Esc>`za"
+		let b:url_nr += 1
+		set nopaste
+	endfunction
+
+endfunction
+
 runtime local.vim
