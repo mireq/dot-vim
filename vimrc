@@ -448,7 +448,7 @@ autocmd BufWinLeave *python call clearmatches()
 
 " Nastavenie vlastností doplňovania pre C++
 let g:clang_use_library=1
-let g:clang_library_path="/usr/lib64/llvm"
+let g:clang_library_path="/usr/lib"
 let g:clang_snippets=1
 let g:clang_snippets_engine='ultisnips'
 let g:clang_conceal_snippets=1

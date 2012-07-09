@@ -24,6 +24,9 @@ Install
     mkdir undodir
     echo "stty -ixon" >> ~/.bashrc
 
+    # locate libclang.so
+    ln -s /path/to/libclang.so /usr/lib/libclang.so
+
     vim local.vim
 
 Shortcuts
