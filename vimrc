@@ -791,6 +791,7 @@ endfunction
 autocmd BufWinEnter *ui :call RunDesigner()
 
 let g:pep8_map='<leader>8' "python
+let g:pyflakes_use_quickfix = 0
 autocmd FileType python set completeopt=menuone,menu,preview
 autocmd FileType python set omnifunc=pythoncomplete#Complete
 autocmd FileType python set completefunc=pythoncomplete#Complete
