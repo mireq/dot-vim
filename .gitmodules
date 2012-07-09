@@ -49,9 +49,6 @@
 [submodule "bundle/tagbar"]
 	path = bundle/tagbar
 	url = git://github.com/majutsushi/tagbar.git
-[submodule "bundle/ultisnips"]
-	path = bundle/ultisnips
-	url = git://github.com/guns/ultisnips.git
 [submodule "bundle/a"]
 	path = bundle/a
 	url = git://github.com/vim-scripts/a.vim.git
