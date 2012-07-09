@@ -22,7 +22,7 @@ Install
     mkdir spell
     mkdir tmp
     mkdir undodir
-    "echo stty -ixon" >> .bashrc
+    echo "stty -ixon" >> ~/.bashrc
 
     vim local.vim
 
