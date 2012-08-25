@@ -19,9 +19,6 @@
 [submodule "bundle/clang_complete"]
 	path = bundle/clang_complete
 	url = git://github.com/Rip-Rip/clang_complete.git
-[submodule "bundle/vim-bufferlist"]
-	path = bundle/vim-bufferlist
-	url = git://github.com/vim-scripts/bufferlist.vim.git
 [submodule "bundle/errormarker"]
 	path = bundle/errormarker
 	url = git://github.com/vim-scripts/errormarker.vim.git
