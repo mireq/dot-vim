@@ -52,3 +52,6 @@
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = git://github.com/SirVer/ultisnips.git
+[submodule "bundle/vim-bufferlist"]
+	path = bundle/vim-bufferlist
+	url = git://github.com/vim-scripts/bufferlist.vim.git
