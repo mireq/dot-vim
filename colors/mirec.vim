@@ -11,7 +11,7 @@ let colors_name = "moja"
 hi Boolean         ctermfg=7     guifg=#e5e5e5 gui=bold cterm=bold
 hi Character       ctermfg=181   guifg=#d7afaf gui=bold cterm=bold
 hi ColorColumn     ctermbg=234   guibg=#1c1c1c
-hi Comment         ctermfg=8     guifg=#7f7f7f gui=italic
+hi Comment         ctermfg=8     guifg=#7f7f7f
 hi Conditional     ctermfg=229   guifg=#ffffaf gui=bold cterm=bold
 hi Conceal         ctermfg=120   ctermbg=233   guifg=#87ff87 guibg=#121212
 hi Constant        ctermfg=181   guifg=#d7afaf gui=bold cterm=bold
@@ -19,8 +19,7 @@ hi Cursor          ctermfg=0     ctermbg=145   guifg=#000000 guibg=#afafaf
 hi CursorColumn    ctermbg=232   guibg=#080808 cterm=none
 hi CursorLine      ctermbg=232   guibg=#080808 cterm=underline gui=underline
 hi Debug           ctermfg=181   guifg=#d7afaf gui=bold cterm=bold
-"hi Define          ctermfg=227   guifg=#ffff5f gui=bold cterm=bold
-hi Define          ctermfg=229   guifg=#ffffaf gui=bold cterm=bold
+hi Define          ctermfg=157   guifg=#afffaf gui=bold cterm=bold
 hi Delimiter       ctermfg=193   guifg=#d7ffaf
 hi DiffAdd         ctermbg=22    guibg=#005f00
 hi DiffChange      ctermbg=24    guibg=#005f87
@@ -36,12 +35,12 @@ hi Folded          ctermfg=181   ctermbg=233   guifg=#d7afaf guibg=#121212
 hi Function        ctermfg=228   guifg=#ffff87
 hi Identifier      ctermfg=153   guifg=#afd7ff gui=bold cterm=bold
 hi phpMethodsVar   ctermfg=151   guifg=#afd7af gui=NONE cterm=NONE
-hi Include         ctermfg=223   guifg=#ffd7af gui=bold cterm=bold
+hi Include         ctermfg=156   guifg=#afff87 gui=bold cterm=bold
 hi IncSearch       ctermfg=0     ctermbg=131   guifg=#000000 guibg=#af5f5f
 hi Keyword         ctermfg=227   guifg=#ffff5f gui=bold cterm=bold
 hi Label           ctermfg=229   guifg=#ffffaf gui=bold,underline cterm=bold,underline
 hi LineNr          ctermfg=8     ctermbg=235   guifg=#7f7f7f guibg=#262626
-hi Macro           ctermfg=223   guifg=#ffd7af gui=bold cterm=bold
+hi Macro           ctermfg=157   guifg=#afffaf gui=bold cterm=bold
 hi MatchParen      ctermfg=192   ctermbg=233   guifg=#d7ff87 guibg=#121212 cterm=bold,reverse
 hi ModeMsg         ctermfg=181   guifg=#d7afaf gui=bold cterm=bold
 hi MoreMsg         ctermfg=231   guifg=#ffffff gui=bold cterm=bold
@@ -49,9 +48,10 @@ hi NonText         ctermfg=104   guifg=#8787d7
 hi Normal          ctermfg=252   ctermbg=233   guifg=#d0d0d0 guibg=#121212
 hi Number          ctermfg=111   guifg=#87afff
 hi Operator        ctermfg=153   guifg=#afd7ff gui=bold cterm=bold
-hi Pmenu           ctermfg=0     ctermbg=244   guifg=#000000 guibg=#808080
-hi PreCondit       ctermfg=180   guifg=#d7af87 gui=bold cterm=bold
-hi PreProc         ctermfg=223   guifg=#ffd7af gui=bold cterm=bold
+hi Pmenu           ctermfg=231   ctermbg=240   guifg=#ffffff guibg=#585858
+hi PmenuSel        ctermfg=0     ctermbg=156   guifg=#000000 guibg=#afff87
+hi PreCondit       ctermfg=157   guifg=#afffaf gui=bold cterm=bold
+hi PreProc         ctermfg=156   guifg=#d7ff87
 hi Question        ctermfg=231   guifg=#ffffff gui=bold cterm=bold
 hi Repeat          ctermfg=222   guifg=#ffd787 gui=bold cterm=bold
 hi Search          ctermfg=227   ctermbg=233   guifg=#ffff5f guibg=#121212 cterm=bold,reverse gui=bold,reverse
@@ -119,8 +119,17 @@ hi UB3             ctermfg=196   guifg=#ff0000
 hi RegionMaker     ctermfg=235   ctermbg=253   guifg=#262626 guibg=#dadada
 hi cCustomFunc     ctermfg=158   guifg=#afffd7
 hi cCustomClass    ctermfg=159   guifg=#afffff
+"hi cIncluded       ctermfg=155   guifg=#afff5f
 hi link cppFuncDef Special
 hi link diffFile Conceal
+
+"hi Attribute       ctermfg=153   guifg=#afd7ff gui=NONE
+hi Attribute       ctermfg=158   guifg=#afffd7
+hi CallClass       ctermfg=120   ctermbg=233   guifg=#87ff87 guibg=#121212
+hi CallStaticClass ctermfg=231 guifg=#ffffff cterm=bold gui=bold
+hi CallFunction    ctermfg=153   guifg=#afd7ff gui=NONE
+hi CallPrivateFunction ctermfg=204   guifg=#ff5787
+hi Self            ctermfg=144 guifg=#afaf87 cterm=bold gui=bold
 
 " todo
 hi todoOkSymbol    ctermfg=34  guifg=#00AF00
