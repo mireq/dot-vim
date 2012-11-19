@@ -1,0 +1,12 @@
+Have a look into syntax/python/ and colors directories first.
+
+copy syntax and colors into .vim
+
+use killor theme in your vimrc:
+  colorscheme killor                                                            
+
+good luck.
+
+PS. You probably like to have Dmitry Vasiliiv's python syntax in your
+    .vim/syntax/python directory. You can get it from
+    http://www.vim.org/scripts/script.php?script_id=790

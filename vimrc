@@ -791,11 +791,7 @@ function! RunDesigner()
 endfunction
 autocmd BufWinEnter *ui :call RunDesigner()
 
-let g:pep8_map='<leader>8' "python
-let g:pyflakes_use_quickfix = 0
 autocmd FileType python set completeopt=menuone,menu,preview
-autocmd FileType python set omnifunc=pythoncomplete#Complete
-autocmd FileType python set completefunc=pythoncomplete#Complete
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType javascript set completefunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -899,12 +895,15 @@ autocmd Filetype java setlocal omnifunc=javacomplete#Complete
 autocmd Filetype java setlocal completefunc=javacomplete#Complete
 
 " Nastavenia pre python
-let g:pythoncomplete_include_super = 1
+let g:pymode_indent = 0
+let g:pymode_syntax = 0
+let g:pymode_options = 0
+let g:pymode_lint_ignore = "W191,E251,E501,E122,E123"
+let g:pymode_lint_checker = "pyflakes"
+
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
 "autocmd FileType python setlocal tags+=$HOME/.vim/tags/python
-autocmd FileType python setlocal omnifunc=Pythoncomplete2
-autocmd FileType python setlocal completefunc=Pythoncomplete2
 autocmd BufRead *.py setlocal makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py setlocal efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 function LoadVirtualenv()
@@ -918,15 +917,6 @@ if 'VIRTUAL_ENV' in os.environ:
 	activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
 	execfile(activate_this, dict(__file__=activate_this))
 EOF
-endfunction
-
-function! Pythoncomplete2(findstart, base)
-	if !exists('g:pythoncomplete2_initialized')
-		let g:pythoncomplete2_initialized = 1
-		python import vim
-		python import re
-	endif
-	return pythoncomplete#Complete(a:findstart, a:base)
 endfunction
 
 function! MailSettings()
