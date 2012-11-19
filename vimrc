@@ -415,10 +415,10 @@ set list
 " Zvýrazne zbytočných medzier
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufWinEnter *{cpp,h,hpp,php,python,css,js} match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd InsertEnter *{cpp,h,hpp,php,python,css,js} match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
-autocmd InsertLeave *{cpp,h,hpp,php,python,css,js} match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinLeave *{cpp,h,hpp,php,python,css,js} call clearmatches()
+autocmd BufWinEnter *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd InsertEnter *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
+autocmd InsertLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd BufWinLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} call clearmatches()
 
 
 " Zvýraznenie aktuálneho riadku (môže byť pomalé)
