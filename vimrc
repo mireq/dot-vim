@@ -930,7 +930,7 @@ function! Pythoncomplete2(findstart, base)
 endfunction
 
 function! MailSettings()
-	setlocal textwidth=72
+	setlocal textwidth=0
 	setlocal comments+=b:--
 	setlocal formatoptions+=tcqan
 	" setlocal nosi nocin
@@ -951,7 +951,7 @@ function! MailSettings()
 	normal 8k
 
 	setlocal ignorecase infercase
-	setlocal wrap
+	"setlocal wrap
 	setlocal nocp
 	let @/ = '^>[ \t]*$'
 
