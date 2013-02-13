@@ -38,8 +38,9 @@
 " => Načítanie pathogen-u
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=$HOME/.vim/bundle/vim-pathogen/
+set runtimepath+=$HOME/.vim/bundle/vim-fugitive/
 runtime autoload/pathogen.vim
-call pathogen#runtime_append_all_bundles()
+call pathogen#incubate()
 call pathogen#helptags()
 
 
