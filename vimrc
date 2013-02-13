@@ -873,6 +873,9 @@ autocmd BufNewFile *.qml execute "normal ihdr	"
 " autocmd FileType php set formatoptions-=w
 autocmd FileType php setlocal comments=s1:/*,mb:*,ex:*/,://,:#
 
+autocmd FileType html set filetype=htmldjango
+autocmd FileType htmldjango inoremap <buffer> { {
+
 " Drobnosti pre PHP
 let php_baselib = 1
 let php_noShortTags = 1
