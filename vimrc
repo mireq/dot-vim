@@ -415,10 +415,10 @@ set list
 " Zvýrazne zbytočných medzier
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
-autocmd BufWinEnter *{cpp,h,hpp,php,python,css,js} match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd InsertEnter *{cpp,h,hpp,php,python,css,js} match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
-autocmd InsertLeave *{cpp,h,hpp,php,python,css,js} match ExtraWhitespace /\s\+$\| \+\ze\t/
-autocmd BufWinLeave *{cpp,h,hpp,php,python,css,js} call clearmatches()
+autocmd BufWinEnter *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd InsertEnter *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+\%#\@<!$\| \+\ze\t\%#\@<!/
+autocmd InsertLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+$\| \+\ze\t/
+autocmd BufWinLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} call clearmatches()
 
 
 " Zvýraznenie aktuálneho riadku (môže byť pomalé)
@@ -873,6 +873,9 @@ autocmd BufNewFile *.qml execute "normal ihdr	"
 " autocmd FileType php set formatoptions-=w
 autocmd FileType php setlocal comments=s1:/*,mb:*,ex:*/,://,:#
 
+autocmd FileType html set filetype=htmldjango
+autocmd FileType htmldjango inoremap <buffer> { {
+
 " Drobnosti pre PHP
 let php_baselib = 1
 let php_noShortTags = 1
@@ -920,7 +923,7 @@ EOF
 endfunction
 
 function! MailSettings()
-	setlocal textwidth=72
+	setlocal textwidth=0
 	setlocal comments+=b:--
 	setlocal formatoptions+=tcqan
 	" setlocal nosi nocin
@@ -941,7 +944,7 @@ function! MailSettings()
 	normal 8k
 
 	setlocal ignorecase infercase
-	setlocal wrap
+	"setlocal wrap
 	setlocal nocp
 	let @/ = '^>[ \t]*$'
 

@@ -22,9 +22,6 @@ Install
     mkdir undodir
     git submodule init
     git submodule update
-    cd bundle/pyflakes-vim
-    git submodule init
-    git submodule update
     echo "stty -ixon" >> ~/.bashrc
 
     # locate libclang.so
