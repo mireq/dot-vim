@@ -868,6 +868,7 @@ autocmd BufWritePost *.cpp call FileWritePost()
 autocmd BufWritePost *.h call FileWritePost()
 autocmd BufRead,BufNewFile *.qml set filetype=qml
 autocmd BufNewFile *.qml execute "normal ihdr	"
+autocmd FileType htmldjango inoremap <buffer> { {
 
 " V php syntaxi je napevno nastavené formátovanie odstavcov - vypínam
 " autocmd FileType php set formatoptions-=w
@@ -899,10 +900,13 @@ autocmd Filetype java setlocal completefunc=javacomplete#Complete
 
 " Nastavenia pre python
 let g:pymode_indent = 0
+let g:pymode_lint = 1
 let g:pymode_syntax = 0
 let g:pymode_options = 0
-let g:pymode_lint_ignore = "W191,E251,E501,E122,E123"
-let g:pymode_lint_checker = "pyflakes"
+let g:pymode_lint_ignore = "W191,E251,E501,E122,E123,E128,E121"
+let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
+let g:pymode_rope_extended_complete = 1
+"let g:pymode_lint_onfly = 1
 
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
