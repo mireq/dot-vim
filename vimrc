@@ -404,6 +404,14 @@ else
 	let &sbr = '+++ '
 endif
 
+function! UpdateLcs()
+	if (&previewwindow)
+		setlocal nolist
+	endif
+endfunction
+
+autocmd BufEnter,BufWinEnter,WinEnter,CmdwinEnter * call UpdateLcs()
+
 " Zapneme zobrazovanie netlačiteľných znakov
 set list
 
