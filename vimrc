@@ -38,6 +38,7 @@
 " => Načítanie pathogen-u
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=$HOME/.vim/bundle/vim-pathogen/
+set runtimepath+=$HOME/.vim/bundle/powerline/powerline/bindings/vim
 runtime autoload/pathogen.vim
 call pathogen#incubate()
 call pathogen#helptags()
@@ -304,23 +305,6 @@ function! TagStatus()
 endfunction
 
 if (&t_Co == 256) || has("gui_running")
-	" Symboly s podporou opatchovaného fontu
-	let g:Powerline_symbols="fancy"
-	let g:Powerline_theme="default"
-	" Pridanie informácie o prázdnych riadkoch
-	call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
-
-	" Zmena zvýrazňovania chybného bieleho miesta
-	function! Powerline#Functions#GetWSMarker() " {{{
-		if ! exists("b:statusline_trailing_space_warning")
-			if search('\s\+$\| \+\ze\t', 'nw') != 0
-				let b:statusline_trailing_space_warning = ' … '
-			else
-				let b:statusline_trailing_space_warning = ''
-			endif
-		endif
-		return b:statusline_trailing_space_warning
-	endfunction " }}}
 else
 	" Nastavenie stavového riadku
 	set statusline=%<%f\ \%y\ %h%w%m%r\ %*
