@@ -973,4 +973,29 @@ function! MailSettings()
 
 endfunction
 
+au BufReadPost * if getfsize(bufname("%")) > 512*1024 | set syntax= | endif
+
+"au VimEnter * if getfsize(bufname("%")) <= 512*1024 | call rainbow_parentheses#activate() | endif
+"au Syntax * RainbowParenthesesLoadRound
+"au Syntax * RainbowParenthesesLoadSquare
+"au Syntax * RainbowParenthesesLoadBraces
+"let g:rbpt_colorpairs = [
+"      \ ['brown',       'RoyalBlue3'],
+"      \ ['Darkblue',    'SeaGreen3'],
+"      \ ['darkgray',    'DarkOrchid3'],
+"      \ ['darkgreen',   'firebrick3'],
+"      \ ['darkcyan',    'RoyalBlue3'],
+"      \ ['darkred',     'SeaGreen3'],
+"      \ ['darkmagenta', 'DarkOrchid3'],
+"      \ ['brown',       'firebrick3'],
+"      \ ['gray',        'RoyalBlue3'],
+"      \ ['196',         '#ff0000'],
+"      \ ['200',         '#ff00df'],
+"      \ ['39',          '#00afff'],
+"      \ ['87',          '#5fffff'],
+"      \ ['118',         '#87ff00'],
+"      \ ['229',         '#ffffaf'],
+"      \ ['255',         '#eeeeee'],
+"      \ ]
+
 runtime local.vim
