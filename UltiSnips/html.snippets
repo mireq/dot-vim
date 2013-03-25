@@ -1,0 +1,51 @@
+snippet html5 "HTML5 Template" !
+<!DOCTYPE html>
+<html>
+<head>
+	<title>${1:title}</title>
+	<meta charset="utf-8" />
+</head>
+<body>
+${0}
+</body>
+</html>
+endsnippet
+
+snippet bootstrap_load
+{% load bootstrap_toolkit %}{% bootstrap_stylesheet_tag %}
+<style type="text/css" media="screen">
+	.container { width: 800px; }
+	.navbar .container { width: 800px; }
+</style>${0}
+endsnippet
+
+snippet bootstrap_navbar
+<div class="navbar navbar-inverse">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="/">${1:title}</a> </div>
+		</div>
+	</div>
+</div>
+${0}
+endsnippet
+
+snippet bootstrap_body
+<div class="container">
+	<div id="content" class="flex">
+		${0}
+	</div>
+</div>
+endsnippet
+
+snippet bootstrap_hero
+<div class="hero-unit">
+	<h1>${1:Heading}</h1>
+	<p>${2:Tagline}</p>
+	<p>
+		<a class="btn btn-primary btn-large">
+			${3:Learn more}
+		</a>
+	</p>
+</div>
+endsnippet

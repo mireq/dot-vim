@@ -38,7 +38,7 @@
 " => Načítanie pathogen-u
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=$HOME/.vim/bundle/vim-pathogen/
-set runtimepath+=$HOME/.vim/bundle/vim-fugitive/
+set runtimepath+=$HOME/.vim/bundle/powerline/powerline/bindings/vim
 runtime autoload/pathogen.vim
 call pathogen#incubate()
 call pathogen#helptags()
@@ -305,23 +305,6 @@ function! TagStatus()
 endfunction
 
 if (&t_Co == 256) || has("gui_running")
-	" Symboly s podporou opatchovaného fontu
-	let g:Powerline_symbols="fancy"
-	let g:Powerline_theme="default"
-	" Pridanie informácie o prázdnych riadkoch
-	call Pl#Theme#InsertSegment('ws_marker', 'after', 'lineinfo')
-
-	" Zmena zvýrazňovania chybného bieleho miesta
-	function! Powerline#Functions#GetWSMarker() " {{{
-		if ! exists("b:statusline_trailing_space_warning")
-			if search('\s\+$\| \+\ze\t', 'nw') != 0
-				let b:statusline_trailing_space_warning = ' … '
-			else
-				let b:statusline_trailing_space_warning = ''
-			endif
-		endif
-		return b:statusline_trailing_space_warning
-	endfunction " }}}
 else
 	" Nastavenie stavového riadku
 	set statusline=%<%f\ \%y\ %h%w%m%r\ %*
@@ -404,6 +387,14 @@ else
 	set lcs=tab:>\ ,extends:>,precedes:<,trail:-
 	let &sbr = '+++ '
 endif
+
+function! UpdateLcs()
+	if (&previewwindow)
+		setlocal nolist
+	endif
+endfunction
+
+autocmd BufEnter,BufWinEnter,WinEnter,CmdwinEnter * call UpdateLcs()
 
 " Zapneme zobrazovanie netlačiteľných znakov
 set list
@@ -869,6 +860,7 @@ autocmd BufWritePost *.cpp call FileWritePost()
 autocmd BufWritePost *.h call FileWritePost()
 autocmd BufRead,BufNewFile *.qml set filetype=qml
 autocmd BufNewFile *.qml execute "normal ihdr	"
+autocmd FileType htmldjango inoremap <buffer> { {
 
 " V php syntaxi je napevno nastavené formátovanie odstavcov - vypínam
 " autocmd FileType php set formatoptions-=w
@@ -900,10 +892,13 @@ autocmd Filetype java setlocal completefunc=javacomplete#Complete
 
 " Nastavenia pre python
 let g:pymode_indent = 0
+let g:pymode_lint = 1
 let g:pymode_syntax = 0
 let g:pymode_options = 0
-let g:pymode_lint_ignore = "W191,E251,E501,E122,E123"
-let g:pymode_lint_checker = "pyflakes"
+let g:pymode_lint_ignore = "W191,E251,E501,E122,E123,E128,E121"
+let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
+let g:pymode_rope_extended_complete = 1
+"let g:pymode_lint_onfly = 1
 
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
