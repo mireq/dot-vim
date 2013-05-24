@@ -868,6 +868,7 @@ autocmd FileType php setlocal comments=s1:/*,mb:*,ex:*/,://,:#
 
 autocmd FileType html set filetype=htmldjango
 autocmd FileType htmldjango inoremap <buffer> { {
+autocmd FileType htmldjango vmap \tr <ESC>`>a'' %}<ESC>`<i{{% trans ''<ESC>
 
 " Drobnosti pre PHP
 let php_baselib = 1
