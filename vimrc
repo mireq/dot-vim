@@ -427,6 +427,7 @@ autocmd BufWinLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} call clearmatc
 
 " Nastavenie vlastností doplňovania pre C++
 let g:clang_use_library=1
+let g:clang_complete_macros=1
 let g:clang_library_path="/usr/lib"
 let g:clang_snippets=1
 let g:clang_snippets_engine='ultisnips'
@@ -893,13 +894,14 @@ autocmd Filetype java setlocal completefunc=javacomplete#Complete
 
 " Nastavenia pre python
 let g:pymode_indent = 0
-let g:pymode_lint = 1
+let g:pymode_lint = 0
 let g:pymode_syntax = 0
 let g:pymode_options = 0
-let g:pymode_lint_ignore = "W191,E251,E501,E122,E123,E128,E121"
+let g:pymode_lint_ignore = "W191,E251,E501,E122,E123,E128,E121,E126"
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
-let g:pymode_rope_extended_complete = 1
+let g:pymode_rope_extended_complete = 0
 "let g:pymode_lint_onfly = 1
+let g:syntastic_auto_loc_list=1
 
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
