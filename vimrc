@@ -435,6 +435,9 @@ let g:clang_conceal_snippets=1
 let g:clang_periodic_quickfix=1
 let g:clang_hl_errors=1
 
+let g:ycm_key_list_select_completion = ['<Down>']
+let g:ycm_key_list_previous_completion = ['<Up>']
+
 set completeopt=menuone,menu
 "set completeopt=menuone,menu,preview
 "               |       |    |
