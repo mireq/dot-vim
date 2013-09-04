@@ -905,6 +905,8 @@ let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
 let g:pymode_rope_extended_complete = 0
 "let g:pymode_lint_onfly = 1
 let g:syntastic_auto_loc_list=1
+let g:syntastic_php_phpcs_args="--tab-width=4"
+let g:syntastic_css_phpcs_args="--tab-width=4"
 
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
