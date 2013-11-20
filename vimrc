@@ -930,6 +930,19 @@ if 'VIRTUAL_ENV' in os.environ:
 EOF
 endfunction
 
+function Ultisnips_get_current_python_class()
+	let l:retval = ""
+	let l:line_declaring_class = search('^class\s\+', 'bnW')
+	if l:line_declaring_class != 0
+		let l:nameline = getline(l:line_declaring_class)
+		let l:classend = matchend(l:nameline, '\s*class\s\+')
+		let l:classnameend = matchend(l:nameline, '\s*class\s\+[A-Za-z0-9_]\+')
+		let l:retval = strpart(l:nameline, l:classend, l:classnameend-l:classend)
+	endif
+	return l:retval
+endfunction
+
+
 function! MailSettings()
 	setlocal textwidth=0
 	setlocal comments+=b:--
