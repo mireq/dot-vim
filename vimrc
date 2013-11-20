@@ -247,6 +247,9 @@ xnoremap <BS> <gv
 " Zmena odsadenia na tabulátory
 command! RetabIndents call RetabIndents()
 
+" Reload so zanechanim historie
+command! Reload %d|r|1d
+
 func! RetabIndents()
 	execute '%!unexpand --first-only -t '.&ts
 endfunc
@@ -535,8 +538,9 @@ vmap \ue !php -r 'echo urlencode(file_get_contents("php://stdin"));'<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Prechod na alternatívny buffer (napr. z hlavičkového súboru na cpp a opačne)
-map <F12> :A<CR>
-imap <F12> <ESC>:A<CR>
+autocmd FileType c,cpp map <buffer> <F12> :A<CR>
+autocmd FileType c,cpp imap <buffer> <F12> <ESC>:A<CR>
+autocmd FileType python map <buffer> <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Zobrazeniei okna TagList
 map <F11> :TagbarToggle<CR>
@@ -904,7 +908,7 @@ let g:pymode_lint_ignore = "W191,E251,E501,E122,E123,E128,E121,E126"
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
 let g:pymode_rope_extended_complete = 0
 "let g:pymode_lint_onfly = 1
-let g:syntastic_auto_loc_list=1
+let g:syntastic_auto_loc_list=2
 let g:syntastic_php_phpcs_args="--tab-width=4"
 let g:syntastic_css_phpcs_args="--tab-width=4"
 
