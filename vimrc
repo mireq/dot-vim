@@ -908,9 +908,12 @@ let g:pymode_lint_ignore = "W191,E251,E501,E122,E123,E128,E121,E126"
 let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
 let g:pymode_rope_extended_complete = 0
 "let g:pymode_lint_onfly = 1
-let g:syntastic_auto_loc_list=2
 let g:syntastic_php_phpcs_args="--tab-width=4"
 let g:syntastic_css_phpcs_args="--tab-width=4"
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_wq = 0
+let g:syntastic_enable_balloons = 1
+let g:syntastic_auto_loc_list = 2
 
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
