@@ -113,4 +113,125 @@ snippet /* "doxygen comment"
  */
 endsnippet
 
+
+snippet wp_admin_menu "Wordpress admin menu"
+
+endsnippet
+
+snippet wp_include_admin_ptions "Include admin options"
+if (is_admin() && file_exists(STYLESHEETPATH. '/admin-options.php')) include_once(STYLESHEETPATH. '/admin-options.php');
+$0
+endsnippet
+
+snippet wp_options_form
+<div class="wrap">
+<?php screen_icon(); ?>
+<h2>${1:Your Plugin Name}</h2>
+
+<form method="post" action="options.php">
+	<?php settings_fields('${2:plugin}_group'); ?>
+	<?php do_settings_sections('$2-settings-page'); ?>
+	<?php submit_button(); ?>
+</form>
+</div>
+$0
+endsnippet
+
+
+snippet wp_options_page
+class ${1:PluginSettingsPage}
+{
+	private $options;
+
+	public function __construct()
+	{
+		add_action('admin_menu', array($this, 'add_plugin_page'));
+		add_action('admin_init', array($this, 'page_init'));
+	}
+
+	public function add_plugin_page()
+	{
+		add_options_page(
+			'${2:Settings Admin}', // Page title
+			'${2:My Settings}', // Menu title
+			'manage_options', // capability
+			'${3:plugin}-settings-page',
+			array($this, 'create_admin_page')
+		);
+	}
+
+	public function create_admin_page()
+	{
+		$this->options = get_option('$3-settings');
+		include(STYLESHEETPATH.'/admin_$3_settings.php');
+	}
+
+	public function page_init()
+	{
+		register_setting(
+			'$3_group',
+			'$3-settings',
+			array($this, 'sanitize')
+		);
+
+		add_settings_section(
+			'setting_section_id',
+			'$2',
+			array($this, 'print_section_info'),
+			'$3-settings-page'
+		);
+
+		add_settings_field(
+			'${5:option_name}',
+			'${6:Option}',
+			array($this, '$5_callback'),
+			'$3-settings-page',
+			'setting_section_id'
+		);
+	}
+
+	public function sanitize($input)
+	{
+		return $input;
+	}
+
+	public function print_section_info()
+	{
+		print 'Enter your settings below:';
+	}
+
+	public function $5_callback()
+	{
+		printf(
+			'<input type="text" id="id_$5" name="$3-settings[$5]" value="%s" />',
+			isset($this->options['$5']) ? esc_attr($this->options['$5']) : ''
+		);
+	}
+}
+
+$settings = new $1();
+$0
+endsnippet
+
+snippet wp_settings_field "Settings field"
+add_settings_field(
+	'${1:option_name}',
+	'${2:Option}',
+	array($this, '$1_callback'),
+	'${3:plugin}-settings-page',
+	'setting_section_id'
+);
+endsnippet
+
+snippet wp_settings_field_callback "Settings field callback"
+public function ${1:option_name}_callback()
+{
+	printf(
+		'<input type="text" id="id_$1" name="${2:plugin}-settings[$1]" value="%s" />',
+		isset($this->options['$1']) ? esc_attr($this->options['$1']) : ''
+	);
+}
+endsnippet
+
+
 # :vim:ft=snippets:
