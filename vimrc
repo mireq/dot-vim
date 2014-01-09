@@ -784,6 +784,7 @@ autocmd Syntax cpp hi doxygenEmphasisedWord ctermfg=250 cterm=bold
 autocmd BufNewFile *.cpp,*.h,*.c execute "set paste" | execute "normal i/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  ".g:snips_company."\r * =====================================================================\r */\r\r" | execute "set nopaste"
 autocmd BufNewFile *.php execute "set paste" | execute "normal i<?php\r/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  ".g:snips_company."\r * =====================================================================\r */\r?>\r" | execute "set nopaste"
 autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
+set errorformat+=%D%*\\a[%*\\d]:\ Entering\ directory\ `%f'
 
 " ui súbory
 function! RunDesigner()
