@@ -40,9 +40,6 @@
 [submodule "bundle/ultisnips"]
 	path = bundle/ultisnips
 	url = git://github.com/SirVer/ultisnips.git
-[submodule "bundle/vim-bufferlist"]
-	path = bundle/vim-bufferlist
-	url = git://github.com/vim-scripts/bufferlist.vim.git
 [submodule "bundle/python-mode"]
 	path = bundle/python-mode
 	url = git://github.com/klen/python-mode.git
@@ -70,3 +67,6 @@
 [submodule "bundle/vim-jade"]
 	path = bundle/vim-jade
 	url = git://github.com/digitaltoad/vim-jade.git
+[submodule "bundle/vim-bufferlist"]
+	path = bundle/vim-bufferlist
+	url = git://github.com/roblillack/vim-bufferlist.git
