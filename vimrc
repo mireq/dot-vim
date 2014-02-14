@@ -947,6 +947,27 @@ function Ultisnips_get_current_python_class()
 	return l:retval
 endfunction
 
+"function LessToCss()
+"	let current_file = shellescape(expand('%:p'))
+"	let filename = shellescape(expand('%:r'))
+"	let command = "silent !lessc " . current_file . " " . filename . ".css 2>&1"
+"	execute command
+"	endfunction
+"autocmd BufWritePost,FileWritePost *.less call LessToCss()
+"
+"function SassToCss()
+"	let current_file = shellescape(expand('%:p'))
+"	let filename = shellescape(expand('%:r'))
+"	let command = "silent !sassc " . current_file . " " . filename . ".css 2>&1"
+"	execute command
+"	endfunction
+"autocmd BufWritePost,FileWritePost *.scss call SassToCss()
+
+"nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
+
+"autocmd BufWritePost,FileWritePost *.scss !sassc % %:t:r.css<CR>
+autocmd BufRead,BufNew *.scss setlocal makeprg=sassc\ %\ %:p:r.css
+autocmd BufWritePost,FileWritePost *.scss make!|redraw
 
 function! MailSettings()
 	setlocal textwidth=0
