@@ -49,15 +49,6 @@ call pathogen#helptags()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Zákaz používania kurzorových kláves
-nnoremap  <Up> ""
-"nnoremap! <Up> <Esc>
-nnoremap  <Down> ""
-"nnoremap! <Down> <Esc>
-nnoremap  <Left> ""
-"nnoremap! <Left> <Esc>
-nnoremap  <Right> ""
-"nnoremap! <Right> <Esc>
-"
 imap \... …
 noremap <F1> ""
 map <C-down> gj
