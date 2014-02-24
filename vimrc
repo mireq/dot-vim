@@ -667,7 +667,6 @@ let g:proj_flags="imstvcS"
 " Nastavenie autora pre Ultisnips
 let g:UltiSnipsExpandTrigger="<TAB>"
 let g:UltiSnipsJumpForwardTrigger="<TAB>"
-autocmd FileType * call UltiSnips_FileTypeChanged()
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
