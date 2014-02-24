@@ -858,7 +858,6 @@ autocmd BufWritePost *.php call FileWritePost()
 autocmd BufWritePost *.cpp call FileWritePost()
 autocmd BufWritePost *.h call FileWritePost()
 autocmd BufRead,BufNewFile *.qml set filetype=qml
-autocmd BufNewFile *.qml execute "normal ihdr	"
 autocmd FileType htmldjango inoremap <buffer> { {
 
 " V php syntaxi je napevno nastavené formátovanie odstavcov - vypínam
