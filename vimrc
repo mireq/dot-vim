@@ -477,26 +477,8 @@ imap <Nul> <C-X><C-I>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Vylepšené vkladanie zátvoriek
-inoremap {      {}<Left>
 inoremap {<CR>  {<CR>}<Esc>O
-inoremap {{     {
-inoremap {}     {}
-
-inoremap [      []<Left>
-inoremap [<CR>  [<CR>]<Esc>O
-inoremap [[     [
-inoremap []     []
-
-inoremap (      ()<Left>
-inoremap (<CR>  (<CR>)<Esc>O
-inoremap ((     (
-inoremap ()     ()
-
-" Vylepšené vkladanie úvodzoviek
-inoremap '      ''<Left>
-inoremap "      ""<Left>
-inoremap ''     '
-inoremap ""     "
+let delimitMate_excluded_ft = "mail,txt,htmldjango"
 
 " Automatické ozátvorkovanie výberu vo vizuálnom režime
 " Example:
