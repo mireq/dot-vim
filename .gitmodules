@@ -52,9 +52,6 @@
 [submodule "bundle/syntastic"]
 	path = bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
-[submodule "bundle/ropevim"]
-	path = bundle/ropevim
-	url = https://github.com/sontek/rope-vim.git
 [submodule "bundle/python-mode"]
 	path = bundle/pythonmode
 	url = git://github.com/klen/python-mode.git
@@ -67,3 +64,6 @@
 [submodule "bundle/vim-bufferlist"]
 	path = bundle/vim-bufferlist
 	url = git://github.com/roblillack/vim-bufferlist.git
+[submodule "bundle/vim-snippets"]
+	path = bundle/vim-snippets
+	url = git://github.com/honza/vim-snippets.git

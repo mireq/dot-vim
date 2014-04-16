@@ -39,8 +39,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set runtimepath+=$HOME/.vim/bundle/vim-pathogen/
 set runtimepath+=$HOME/.vim/bundle/powerline/powerline/bindings/vim
+set runtimepath+=$HOME/.vim/bundle/ultisnips
 runtime autoload/pathogen.vim
-call pathogen#incubate()
+call pathogen#infect('bundle/{}')
 call pathogen#helptags()
 
 
