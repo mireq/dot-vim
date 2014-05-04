@@ -12,7 +12,7 @@ namespace${1/.+/ /m}${1:`!p snip.rv = snip.basename or "name"`}
 endsnippet
 
 snippet class "class"
-class ${1:`!v Filename('$1', 'class')`}${2}
+class ${1:`!v vim_snippets#Filename('$1', 'class')`}${2}
 {
 public:
 	$1();
@@ -23,7 +23,7 @@ private:
 endsnippet
 
 snippet QObject "QObject"
-class ${1:`!v Filename('$1', 'class')`}: public ${2:QObject}
+class ${1:`!v vim_snippets#Filename('$1', 'class')`}: public ${2:QObject}
 {
 Q_OBJECT
 public:
@@ -35,7 +35,7 @@ private:
 endsnippet
 
 snippet QWidget "QWidget"
-class ${1:`!v Filename('$1', 'class')`}: public ${2:QWidget}
+class ${1:`!v vim_snippets#Filename('$1', 'class')`}: public ${2:QWidget}
 {
 Q_OBJECT
 public:
@@ -50,7 +50,7 @@ snippet uiDec "Ui Declaration"
 #include <QtGui/$2>
 
 namespace Ui {
-	class ${1:`!v Filename('$1', 'class')`};
+	class ${1:`!v vim_snippets#Filename('$1', 'class')`};
 }
 
 class $1: public ${2:QWidget}
@@ -66,7 +66,7 @@ private:
 endsnippet
 
 snippet uiDef "Ui Definition"
-#include "${1:`!v Filename('$1', 'class')`}.h"
+#include "${1:`!v vim_snippets#Filename('$1', 'class')`}.h"
 #include "ui_$1.h"
 
 $1::$1(QWidget *parent):
@@ -84,7 +84,7 @@ ${0}
 endsnippet
 
 snippet langChange "Change language event"
-void ${1:`!v Filename('$1', 'class')`}::changeEvent(QEvent *event)
+void ${1:`!v vim_snippets#Filename('$1', 'class')`}::changeEvent(QEvent *event)
 {
 	${2:QWidget}::changeEvent(event);
 	switch (event->type()) {
@@ -111,13 +111,13 @@ for (auto ${1:i} = $1.begin(); $1 != $1.end(); ++$1) {
 endsnippet
 
 snippet mfun "Member function"
-${4:void} ${1:`!v Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {
+${4:void} ${1:`!v vim_snippets#Filename('$1', 'ClassName')`}::${2:memberFunction}(${3}) {
 	${0:return};
 }
 endsnippet
 
 snippet prop "Property"
-${2:int} ${1:`!v Filename('$1', 'class')`}::${3:property}() const
+${2:int} ${1:`!v vim_snippets#Filename('$1', 'class')`}::${3:property}() const
 {
 	return m_$3;
 }
@@ -129,7 +129,7 @@ void $1::set${3/\w+\s*/\u$0/}(const $2 &$3)
 endsnippet
 
 snippet sprop "Property without reference"
-${2:int} ${1:`!v Filename('$1', 'class')`}::${3:property}() const
+${2:int} ${1:`!v vim_snippets#Filename('$1', 'class')`}::${3:property}() const
 {
 	return m_$3;
 }
