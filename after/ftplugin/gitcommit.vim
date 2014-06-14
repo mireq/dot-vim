@@ -6,7 +6,7 @@ function! s:insertTime()
 	let s:minutes=system("tr \"\\n\" \" \"|sed -e 's/.* \\(\\([0-9]\\+\\) minutes\\).*/\\2/g'", s:minutes)
 	"let s:minutes=system("sed -e 's/^[0-9]$/0\\0/g'", s:minutes)
 	let s:reg = @a
-	let @a='@' . s:hours . ":" . s:minutes
+	let @a='@' . printf("%d", s:hours) . ":" . printf("%02d", s:minutes)
 	execute "normal! \"ap"
 	let @a=s:reg
 endfunction
