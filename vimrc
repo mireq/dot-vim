@@ -65,6 +65,7 @@ set sidescroll=5
 " Default text width to 80 chars
 set textwidth=80
 set colorcolumn=80
+set wrap
 
 " Mouse
 set mouse=a
