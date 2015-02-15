@@ -7,376 +7,295 @@
 "
 "
 " Maintainer: Miroslav Bendík
-" Version: 0.1
-" Last Change: 8.07.2012 09:30:00
+" Version: 0.2
+" Last Change: 15.02.2015
 " Sections:
 " -------------------------------------------------------------
-" *> Načítanie pathogen-u
-" *> Základné nastavenia
-"   *> Ukladanie
-"   *> Nastavenie menu
-" *> Formátovanie
-" *> Zobrazenie
-"   *> Stavový riadok
-"   *> Myš
-"   *> Zalamovanie riadkov
-"   *> Zobrazovanie netlačiteľných znakov
-" *> Automatické dopĺňanie
-"   *> Tagy
-" *> Skratky
-"   *> Skratky pre pluginy
-" *> Export do HTML
-" *> Rôzne
-"   *> Optimalizácia výkonu
-"   *> Figlet
-" *> Nastavenia pluginov
-" *> Nastavenia pre konkrétne typy súborov
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Načítanie pathogen-u
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set runtimepath+=$HOME/.vim/bundle/vim-pathogen/
-set runtimepath+=$HOME/.vim/bundle/powerline/powerline/bindings/vim
-set runtimepath+=$HOME/.vim/bundle/ultisnips
-runtime autoload/pathogen.vim
-call pathogen#infect('bundle/{}')
-call pathogen#helptags()
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Základné nastavenia
+" => Basic settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Zákaz používania kurzorových kláves
-imap \... …
+" No compatible with vi
+set nocompatible
+
+" Enable vimrc
+set exrc
+
+" Enable file type detection
+filetype on
+filetype indent on
+filetype plugin on
+
+" Disable help
 noremap <F1> ""
+
+" Navigation with C-up / C-down
 map <C-down> gj
 map <C-up> gk
 
-" Nastavenie nekompatibilného režimu
-set nocompatible
+" Remap home
+map <silent> <Home> ^
+imap <silent> <Home> <C-O>^
 
-" Hľadanie nastavení v lokálnych súboroch
-"set exrc
+" Better line breaks
+set breakindent
 
-" Zapnutie zvýrazňovania syntaxe
-syntax on
-
-" Podpora automatickej detekcie typu súboru
-filetype on
-
-" Podpora automatického načítavania pluginov pre daný typ súboru
-filetype plugin on
-
-" Podpora automatického načítavania odsadzovacieho skriptu
-filetype indent on
-
-" Nastavenie histórie na 1000 príkazov
+" Enable history
 set history=1000
 
-" Zapneme zobrazovanie čísel riadkov
-set number
-
-" Zapneme zabaľovanie znakov
-set conceallevel=2
-
-" Zapneme možnosť používania : v kľúčových slovách jazyka
-"set iskeyword=@,~,48-57,_,192-255, "
+" Enable : in keywords
 set iskeyword=@,~,48-57,_,192-255
 
-" Automatický presun na hľadaný výraz počas písania
-set incsearch
-
-" Pamätá si históriu undo a umožní prepínanie neuložených bufferov
+" Enable hidden buffers
 set hidden
 
-" Vypnutie pípnutí pri chybe
+" Disable visual bell
 set noerrorbells
 set novisualbell
 set t_vb=
 
-" Nastavenie príkazu pre grepovanie súborov
+" Set grep prorgram
 set grepprg=grep\ -nH\ $*
 
-" Nastavenie počtu riadkov viditeľných nad a pod riadkom s kurzorom
+" Set visible lines / columns before and after cursor
 set scrolloff=3
-
-" Nastavenie počtu stĺpcov viditeľných pred a za kurzorom
 set sidescroll=5
 
-" Nastavenie šírky riadku na 80 znakov
+" Default text width to 80 chars
 set textwidth=80
-
-" Nastavenie zvýraznenia dlhých riadkov
 set colorcolumn=80
 
+" Mouse
+set mouse=a
+set mousehide
+set mousemodel=popup
+
+" Integrate clipboard
+set clipboard=unnamed,unnamedplus
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Ukladanie
+" => Build
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Automatický zápis pri prechode na iný buffer
-"set autowrite
+" Run make
+map <F9> :make -j 2<CR>
 
-" Automatická záloha súborov
+" Auto jump to first error
+set cf
+
+"let errormarker_erroricon = "/usr/share/icons/oxygen/16x16/status/dialog-error.png"
+"let errormarker_warningicon = "/usr/share/icons/oxygen/16x16/status/dialog-warning.png"
+let &errorformat="%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c:,%-Gfrom %f:%l\\,,-Gfrom %f:%l:%c\\,," . &errorformat
+set errorformat+=%D%*\\a[%*\\d]:\ Entering\ directory\ `%f'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NeoBundle
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+if has('vim_starting')
+	set runtimepath+=~/.vim/bundle/neobundle.vim/
+endif
+
+call neobundle#begin(expand('~/.vim/bundle'))
+
+NeoBundle 'project.tar.gz', {'lazy': 1, 'autoload': {'mappings': ['<F8>']}}
+NeoBundle 'a.vim', {'lazy': 1, 'autoload': {'mappings': ['<F12>']}}
+NeoBundle 'tagbar', {'lazy': 1, 'autoload': {'mappings': ['<F11>']}}
+NeoBundle 'gundo.vim', {'lazy': 1, 'autoload': {'mappings': ['<F7>']}}
+NeoBundle 'vim-bufferlist', {'lazy': 1, 'autoload': {'mappings': ['<F3>']}}
+NeoBundle 'killor', {'lazy': 1, 'autoload': {'filetypes': 'python'}}
+NeoBundle 'vim-snippets', {'lazy': 1, 'autoload': { 'on_source': ['ultisnips'] } }
+NeoBundle 'ultisnips', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
+NeoBundle 'YouCompleteMe', {'lazy': 1, 'augroup': 'youcompletemeStart', 'autoload': { 'insert': 1, }, 'build': { 'unix': 'git submodule update --init --recursive;./install.sh --clang-completer', }, 'build_commands': 'cmake', 'disabled': !has('python'), 'vim_version': '7.3.584', 'depends': 'ultisnips'}
+NeoBundle 'ctrlp.vim', {'lazy': 1, 'autoload': {'commands': 'CtrlP', 'mappings': '<c-p>',}}
+NeoBundle 'delimitMate', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
+NeoBundle 'emmet-vim', {'lazy': 1, 'autoload': {'filetypes': ['html', 'htmldjango']}}
+NeoBundle 'syntastic', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
+NeoBundle 'powerline', {'rtp': 'powerline/bindings/vim/'}
+NeoBundle 'python-mode', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
+NeoBundle 'vim-css3-syntax', {'lazy': 1, 'autoload': {'filetypes': ['css', 'scss']}}
+NeoBundle 'vim-signify', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
+NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog'] } }
+NeoBundle 'vim-javascript', {'lazy': 1, 'autoload': {'filetypes': ['javascript', 'html']}}
+NeoBundle 'vim-indent-guides'
+
+call neobundle#end()
+
+" NeoBundleCheck
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Saving
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Write after buffer leave
+" set autowrite
+
+" Backup
 set backup
-
-" Automaticky zálohovať do nasledujúcich adresárov
 set backupdir=~/.vim/backup,.,~/
 
-" Nastavenie dočasného adresára
+" Tmp directory
 set directory=~/.vim/tmp,~/tmp,.,/tmp
 
-" Namiesto hlásenia chyby pri ukončení editora sa spýta, či majú byť zmeny
-" uložené
+" Ask before close
 set confirm
 
-" Nastavenie súboru viminfo
+" Viminfo
 set viminfo='50,\"500
-"           |   |
-"           |   + Maximálna veľkosť registru - 500 riadkov
-"           + Ukladanie informácii o max. 50. naposledy editovaných súboroch
+"            |    |
+"            |    + Maximum number of files for each register
+"            + Save max 50 files
 
-" Nastavenie perzistentného undo
-" Adresár pre ukladanie undo
+" Persistend undo
 set undodir=~/.vim/undodir
-" Nastavenie názvu súboru pre undo - automaticky
 set undofile
-" Počet zmien, ktoré sa dajú vrátiť
-set undolevels=1024
-" Maximálny počet riadkov, ktoré sa dajú uložiť do undo pri reloade bufferu
+set undolevels=2048
 set undoreload=65538
 
+" Reload file, preserve history
+command! Reload %d|r|1d
+
+" Save with ctrl+s
+map <C-S> :w<CR>
+imap <C-S> <ESC><C-S>
+
+" HTML
+let html_number_lines = 0
+let use_xhtml = 1
+let html_use_css = 1
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Nastavenie menu
+" => Menu
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Zobrazenie jednoduchého menu pri dopĺňaní s niekoľkými existujúcimi možnosťami
 set wildmenu
-
-" Na dopĺňanie príkazov sa používa klávesa tab
 set wildchar=<Tab>
-
-" Doplnenie čo najväčšej časti príkazu
 set wildmode=longest:full,full
-
-" Ignorovanie dopĺňania Ui_*
-set wildignore=Ui_*
-
+set wildignore=Ui_*,*.git,*.pyc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Formátovanie
+" => Formating
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Nastavenie automatického formátovania pri písaní
 set formatoptions=croq1
 "                 |||||
-"                 ||||+ Zákaz zalamovania jednoznakových slov
-"                 |||+ Automatické sformátovanie pri gq
-"                 ||+ Automatické vloženie komentára pri použití o/O
-"                 |+ Automatické vloženie komentára na nový riadok
-"                 + Automatické zalamovanie v komentároch
+"                 ||||+ Not break lines in insert mode
+"                 |||+ Formatting with gq
+"                 ||+ Insert comment leader after 'o'
+"                 |+ Insert comment leader after <Enter>
+"                 + Auto wrap comments using textwidth
 
-" Kopírovanie štruktúry odsadenia pri automatickom odsadení
+" Wrap on end
+set wrapmargin=0
+set linebreak
+
+" Copy indent structure
 set copyindent
-
-" Ponechanie štruktúry odsadenia pri jeho zmene
 set preserveindent
 
-" Zaokrúhlenie odsadenia na niekoľko tabov
+" Round to tabs
 set shiftround
 
-" Nenahradzovať tabulátor medzerami
-set noexpandtab
-
-" Nastavenie zobrazovanej šírky tabulátora
+" Use tabs
 set tabstop=3
-
-" Počet vložených medzier pri zväčšení odsadenia (automaticky sa prevedú na
-" tabulátor)
 set shiftwidth=3
 
-" Automatické zväčšenie / zmenšenie odsadenia podľa zvyklostí jazyka
+" Indent for language
 set smartindent
 
-" Zobrazenie čo najväčšej časti posledného riadku
 set display=lastline
 
-" Odsadenie používajúce tab-y
-function! TabIndent() range
-	let cl = a:firstline
-	while (cl <= a:lastline)
-		execute "normal 0i\<Tab>"
-		execute "normal j"
-		let cl = cl + 1
-	endwhile
-endfunction
-
-" Zrušenie odsadenia používajúceho tab-y
-function! TabUnindent() range
-	let cl = a:firstline
-	while (cl <= a:lastline)
-		if indent(cl) >= &tabstop
-			execute "normal 0"
-			let end = indent(cl) - &tabstop
-			while indent(cl) > end
-				execute "normal x"
-			endwhile
-		endif
-		execute "normal j"
-		let cl = cl + 1
-	endwhile
-endfunction
-
-" Odsadenie klávesou tab vo vizuálnom režime
+" Adjust indent
 xnoremap <Tab> >gv
 au BufEnter * xnoremap <Tab> >gv
+xmap <BS> <gv
 
-" Zrušenie odsadenia klávesou backspace vo vizuálnom režime
-xnoremap <BS> <gv
-
-" Zmena odsadenia na tabulátory
 command! RetabIndents call RetabIndents()
-
-" Reload so zanechanim historie
-command! Reload %d|r|1d
 
 func! RetabIndents()
 	execute '%!unexpand --first-only -t '.&ts
 endfunc
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Snippets
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+imap \... …
+
+" Better completion for {
+inoremap {<CR>  {<CR>}<Esc>O
+
+" Disable delimitmate for file types
+let delimitMate_excluded_ft = "mail,txt,htmldjango"
+
+" Wrap
+vmap ( <ESC>`>a)<ESC>`<i((<ESC>gv
+vmap [ <ESC>`>a]<ESC>`<i[[<ESC>gv
+vmap { <ESC>`>a}<ESC>`<i{{<ESC>gv
+vmap \' <ESC>`>a''<ESC>`<i''<ESC>gv
+vmap \" <ESC>`>a""<ESC>`<i""<ESC>gv
+vmap ; <ESC>`>a“<ESC>`<i„<ESC>gv
+
+" Reverse chars
+vmap \rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Zobrazenie
+" => Display
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Vim bude nastavovať titulok okna
+" Enable line number display
+set number
+
+" Hide conceal chars
+set conceallevel=2
+
+" Enable statusline
+set laststatus=2
+
+" Show title in terminal window
 set title
 
-" Zobrazenie párových zátvoriek
+" Show matching brackets
 set showmatch
 
-" Zvýrazňovať vyhľadávanie
+" Highlidhgt search
 set hlsearch
 
-" Vypnutie toolbaru z GUI
+" Disable toolbars
 if has("gui_running")
 	set guioptions-=T
 endif
 
+" Enable syntax
+syntax on
+
+" Fast tty (no optimization)
+set ttyfast
+
+" Automatic sync (slow!)
+" autocmd BufEnter * syntax sync fromstart
+
+" Max 500 lines for syntax
+" syntax sync minlines=500
+
+" Colorscheme
 if (&t_Co == 256) || has("gui_running")
 	colorscheme mirec
 else
 	colorscheme default
 endif
 
-" Zobrazenie symbolov pre oddelenie okien
+" Split symbols
 if has("multi_byte")
 	set fillchars=stl:\ ,stlnc:\ ,vert:┆,fold:-,diff:-
 else
 	set fillchars=stl:\ ,stlnc:\ ,vert:\|,fold:-,diff:-
 endif
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Stavový riadok
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Zobrazovanie stavového riadku vždy
-set laststatus=2
-
-" Vráti názov tagu pre stavový riadok
-function! TagStatus()
-	if bufname('%') == ''
-		return ""
-	else
-		if exists('loaded_taglist')
-			return Tlist_Get_Tagname_By_Line()
-		else
-			return ""
-		endif
-	endif
-endfunction
-
-if (&t_Co == 256) || has("gui_running")
-else
-	" Nastavenie stavového riadku
-	set statusline=%<%f\ \%y\ %h%w%m%r\ %*
-	"               | |    |   | | | |
-	"               | |    |   | | | + Len na čítanie
-	"               | |    |   | | + Modifikovaný
-	"               | |    |   | + Náhľadové okno
-	"               | |    |   + Help okno
-	"               | |    + Typ súboru
-	"               | + Súbor
-	"               + Indikátor pretečenia textu stavového riadku
-	"set statusline+=%(\{%{Tlist_Get_Tagname_By_Line()}\}%)\ %*
-	"                     |
-	"                     + Zobrazenie aktuálneho tagu
-	set statusline+=%(\{%{TagStatus()}\}%)\ %*
-	"                     |
-	"                     + Zobrazenie aktuálneho tagu
-	set statusline+=%=%-13.(%l/%L,%c%V%)\ %P\ %*
-	"                | |     |  |  | |     |
-	"                | |     |  |  | |     + Percentuálne vyjadrenie polohy v súbore
-	"                | |     |  |  | + Virtuálne číslo stĺpca
-	"                | |     |  |  + Číslo stĺpca
-	"                | |     |  + Celkový počet riadkov
-	"                | |     + Číslo riadku
-	"                | + Minimálna šírka nasledujúceho výrazu 13 znakov
-	"                + Prechod na zarovnanie vpravo
-	set statusline+=%05.(%{VimBuddy()}%)\ %*
-	"                |     |
-	"                |     + Smajlík
-	"                + Minimálna šírka 5 znakov
-
-
-	" Žltý stavový riadok počas editácie
-	autocmd InsertEnter * hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=3 guifg=#ffff00 guibg=#000000 gui=bold
-
-	" Zelený stavový riadok po skončení editácie
-	autocmd InsertLeave * hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=2 guifg=#00ff00 guibg=#000000 gui=bold
-
-	" Nastavenie stavového riadku po spustení
-	hi StatusLine term=NONE cterm=bold ctermbg=0 ctermfg=2 guifg=#00ff00 guibg=#000000 gui=bold
-endif
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Myš
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Aktivovanie podpory myši vo všetkých režimoch
-set mouse=a
-
-" Skrytie kurzora počas písania
-set mousehide
-
-" Zobrazenie vyskakovacieho menu pri stlačení pravého myšítka
-set mousemodel=popup
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Zalamovanie riadkov
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Budeme zalamovať až úplne na konci riadku
-set wrapmargin=0
-
-" Budeme zobrazovať zalomené riadky i keď v skutočnosti nebude vložené EOL
-set linebreak
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Zobrazovanie netlačiteľných znakov
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Nastavenie zobrazovania netlačiteľných znakov
-" a zobrazenie ↪ na ďalšom riadku ak riadok prekračuje šírku okna
+" Whitespace symbols
 if has("multi_byte")
-	set lcs=tab:\»\ ,trail:•,extends:>,precedes:<,nbsp:¤"
+	set lcs=tab:\⁞\ ,trail:•,extends:>,precedes:<,nbsp:¤"
 	let &sbr = nr2char(8618).' '
 else
 	set lcs=tab:>\ ,extends:>,precedes:<,trail:-
@@ -390,16 +309,9 @@ function! UpdateLcs()
 endfunction
 
 autocmd BufEnter,BufWinEnter,WinEnter,CmdwinEnter * call UpdateLcs()
-
-" Zapneme zobrazovanie netlačiteľných znakov
 set list
 
-" Zvýraznenie riadkov, ktorých dĺžka prekračuje textwidth (môže byť pomalé)
-"au BufWinEnter * if &textwidth > 8
-"\ | let w:m1=matchadd('WarnLength', printf('\%%<%dv.\%%>%dv', &textwidth+1, &textwidth-8), -1)
-"\ | let w:m2=matchadd('OverLength', printf('\%%>%dv.\+', &textwidth), -1)
-"\ | endif
-" Zvýrazne zbytočných medzier
+" Highlight extra whitespace
 highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
 autocmd BufWinEnter *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+$\| \+\ze\t/
@@ -407,159 +319,192 @@ autocmd InsertEnter *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhi
 autocmd InsertLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+$\| \+\ze\t/
 autocmd BufWinLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} call clearmatches()
 
-
-" Zvýraznenie aktuálneho riadku (môže byť pomalé)
-"au WinLeave * set nocursorline
-"au WinEnter * set cursorline
-" Zobrazenie aktuálneho riadku aj stĺpca (je pomalé!)
-"au WinEnter * set cursorline cursorcolumn
-"set cursorline
-
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Automatické dopĺňanie
+" => Auto complete
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Nastavenie vlastností doplňovania pre C++
-let g:clang_use_library=1
-let g:clang_complete_macros=1
-let g:clang_library_path="/usr/lib"
-let g:clang_snippets=1
-let g:clang_snippets_engine='ultisnips'
-let g:clang_conceal_snippets=1
-let g:clang_periodic_quickfix=1
-let g:clang_hl_errors=1
-
-let g:ycm_key_list_select_completion = ['<Down>']
-let g:ycm_key_list_previous_completion = ['<Up>']
 
 set completeopt=menuone,menu
-"set completeopt=menuone,menu,preview
-"               |       |    |
-"               |       |    + Použivať náhľadové okno
-"               |       + Zobraziť popup menu pre dopĺňanie
-"               + Zobraziť menu aj keď je jediná zhoda
+"               |       |
+"               |       + Display popup
+"               + Display when single option
 
-" Automatické zatvorenie náhľadového okna pri presune kurzoru
+" Hide help when cursor moved
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-" Dopĺňanie po stlačení Ctrl+Space
+" Complete shortcuts
 imap <C-Space> <C-X><C-I>
 imap <Nul> <C-X><C-I>
 
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Tagy
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Načítanie súborov s tagmi (alternatíva k CLang)
-" set tags+=~/.vim/tags/cpp
-" set tags+=~/.vim/tags/qt4
-" set tags+=./tags
-
-" let OmniCpp_NamespaceSearch = 2
-" let OmniCpp_GlobalScopeSearch = 1
-" let OmniCpp_ShowAccess = 1
-" let OmniCpp_MayCompleteDot = 0
-" let OmniCpp_MayCompleteArrow = 0
-" let OmniCpp_MayCompleteScope = 0
-" let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" let OmniCpp_ShowPrototypeInAbbr = 1
-" let OmniCpp_SelectFirstItem = 0
-
-" Znovuvytvorenie tagov po stlačení Ctrl+F12
-" map <C-F12> :!ctags --sort=yes -R --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Skratky
+" => Plugin settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Vylepšené vkladanie zátvoriek
-inoremap {<CR>  {<CR>}<Esc>O
-let delimitMate_excluded_ft = "mail,txt,htmldjango"
+if neobundle#tap('project.tar.gz') "{{{
+	function! neobundle#tapped.hooks.on_post_source(bundle)
+		nmap <F8> <Plug>ToggleProject
+	endfunction
 
-" Automatické ozátvorkovanie výberu vo vizuálnom režime
-" Example:
-" Výber, oblasti, stlačenie otváracej zátvorky.
-vmap ( <ESC>`>a)<ESC>`<i((<ESC>gv
-vmap [ <ESC>`>a]<ESC>`<i[[<ESC>gv
-vmap { <ESC>`>a}<ESC>`<i{{<ESC>gv
-" Automatické vloženie do úvodzoviek.
-" Stlačiť \' vo vizuálnom režime
-vmap \' <ESC>`>a''<ESC>`<i''<ESC>gv
-" Stlačiť \" vo vizuálnom režime
-vmap \" <ESC>`>a""<ESC>`<i""<ESC>gv
-" Stlačiť ; vo vizuálnom režime
-vmap ; <ESC>`>a“<ESC>`<i„<ESC>gv
-
-" Reverzné poradie znakov
-vmap \rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
-
-
-" Uloženie súboru klávesovou skratkou Ctrl+S. Pre terminály je nutné spustiť
-" pred tým 'stty -ixon' pre deaktiváciu riadenia toku. Riadenie toku sa po
-" deaktivácii obnoví klávesovou skratkou Ctrl+Q.
-map <C-S> :w<CR>
-imap <C-S> <ESC><C-S>
-
-" Urlencode
-vmap \ue !php -r 'echo urlencode(file_get_contents("php://stdin"));'<cr>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Skratky pre pluginy
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Prechod na alternatívny buffer (napr. z hlavičkového súboru na cpp a opačne)
-autocmd FileType c,cpp map <buffer> <F12> :A<CR>
-autocmd FileType c,cpp imap <buffer> <F12> <ESC>:A<CR>
-autocmd FileType python map <buffer> <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-" Zobrazeniei okna TagList
-map <F11> :TagbarToggle<CR>
-
-" Zobrazenie mini buffer exploreru
-map <silent> <F3> :call BufferList()<CR>
-
-" Premapovanie klávesy home nech skáče na prvý neprázdny znak
-map <silent> <Home> ^
-imap <silent> <Home> <C-O>^
-
-if !hasmapto('<Plug>ToggleProject')
-	nmap <silent> <F8> <Plug>ToggleProject
+	let g:proj_flags="imstvcS"
+	"                 |||||||
+	"                 ||||||+ Sort
+	"                 |||||+ Close after select
+	"                 ||||+ Vimgrep instead of grep
+	"                 |||+ Window size
+	"                 ||+ Syntax
+	"                 |+ Ctrl+W O
+	"                 + File names in status line
+	call neobundle#untap()
 endif
-nmap <silent> <F7> :GundoToggle<CR>
+"}}}
 
-" Zarovnanie komentárov pre doxygen
-vmap \adox :Align! lp1P0 "\\\\/\*\*< " "\*/"<CR>
+if neobundle#tap('YouCompleteMe') "{{{
+	autocmd FileType python nmap <buffer> <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
-" Zoznamy
-nmap \check cl✔<esc>
-nmap \uncheck cl✗<esc>
-nmap \partcheck cl◉<esc>
+	let g:ycm_key_list_select_completion = ['<Down>']
+	let g:ycm_key_list_previous_completion = ['<Up>']
+	let g:ycm_confirm_extra_conf=0
+	call neobundle#untap()
+endif
+"}}}
 
-" Spustenie make
-map <F9> :make -j 2<CR>
+if neobundle#tap('a.vim') "{{{
+	autocmd FileType c,cpp map <buffer> <F12> :A<CR>
+	autocmd FileType c,cpp imap <buffer> <F12> <ESC>:A<CR>
+	call neobundle#untap()
+endif
+"}}}
+
+if neobundle#tap('tagbar') "{{{
+	function! neobundle#tapped.hooks.on_post_source(bundle)
+		nmap <F11> :TagbarToggle<CR>
+	endfunction
+	call neobundle#untap()
+endif
+"}}}
+
+if neobundle#tap('gundo.vim') "{{{
+	function! neobundle#tapped.hooks.on_post_source(bundle)
+		nmap <F7> :GundoToggle<CR>
+	endfunction
+	call neobundle#untap()
+endif
+"}}}
+
+if neobundle#tap('vim-bufferlist') "{{{
+	function! neobundle#tapped.hooks.on_post_source(bundle)
+		map <silent> <F3> :call BufferList()<CR>
+	endfunction
+	call neobundle#untap()
+endif
+"}}}
+
+if neobundle#tap('ultisnips') "{{{
+	function! neobundle#hooks.on_source(bundle)
+		silent! call UltiSnips#FileTypeChanged()
+	endfunction
+	let g:UltiSnipsExpandTrigger="<TAB>"
+	let g:UltiSnipsJumpForwardTrigger="<TAB>"
+	let g:UltiSnipsSnippetDirectories=['UltiSnips']
+	call neobundle#untap()
+endif
+"}}}
+
+if neobundle#tap('syntastic') "{{{
+	let g:syntastic_php_phpcs_args="--tab-width=4"
+	let g:syntastic_css_phpcs_args="--tab-width=4"
+	let g:syntastic_auto_loc_list = 0
+	let g:syntastic_check_on_wq = 0
+	let g:syntastic_enable_balloons = 1
+	let g:syntastic_rst_checkers=['']
+endif
+"}}}
+
+if neobundle#tap('vim-fugitive') "{{{
+	function! neobundle#hooks.on_post_source(bundle)
+		call fugitive#detect(expand('#:p'))
+	endfunction
+	call neobundle#untap()
+endif
+"}}}
+
+if neobundle#tap('vim-indent-guides') "{{{
+	let g:indent_guides_auto_colors = 0
+	let g:indent_guides_enable_on_vim_startup = 1
+	let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'project']
+	let g:indent_guides_space_guides = 0
+	let g:indent_guides_start_level = 1
+	call neobundle#untap()
+endif
+"}}}
+autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234
+autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=#262626   ctermbg=235
+
+augroup UltiSnipsFileType
+	autocmd FileType * silent! call UltiSnips#FileTypeChanged()
+augroup END
+
+function Ultisnips_get_current_python_class()
+	let l:retval = ""
+	let l:line_declaring_class = search('^class\s\+', 'bnW')
+	if l:line_declaring_class != 0
+		let l:nameline = getline(l:line_declaring_class)
+		let l:classend = matchend(l:nameline, '\s*class\s\+')
+		let l:classnameend = matchend(l:nameline, '\s*class\s\+[A-Za-z0-9_]\+')
+		let l:retval = strpart(l:nameline, l:classend, l:classnameend-l:classend)
+	endif
+	return l:retval
+endfunction
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Export do HTML
+" => Settings for file types
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-" Vypnutie exportu čísel riadkov
-let html_number_lines = 0
+" cpp
+function! EnhanceCppSyntax()
+	syn match cppFuncDef "::\~\?\zs\h\w*\ze([^)]*\()\s*\(const\)\?\)\?$"
+endfunction
+autocmd Syntax cpp call EnhanceCppSyntax()
+autocmd FileType c,cpp nmap <F5> "lYml[[kw"cye'l
+autocmd FileType c,cpp nmap <F6> :set paste<CR>ma:let @n=@/<CR>"lp==:s/\<virtual\>\s*//e<CR>:s/\<static\>\s*//e<CR>:s/\s*=\s*[^,)]*//ge<CR>:let @/=@n<CR>'ajf(b"cPa::<Esc>f;s<CR>{<CR>}<CR><Esc>kk:nohlsearch<CR>:set nopaste<CR>
+autocmd FileType c,cpp set foldmethod=indent
+autocmd FileType c,cpp set foldlevel=6
+autocmd FileType c,cpp command! AddDef call C_InsertTemplate("preprocessor.ifndef-def-endif")
 
-" Zapnutie xhtml formátu
-let use_xhtml = 1
+" python
+autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
+autocmd FileType python set completeopt=menuone,menu,preview
+autocmd FileType python setlocal complete+=k
+autocmd FileType python setlocal isk+=".,("
+autocmd BufRead *.py setlocal makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
+autocmd BufRead *.py setlocal efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
 
-" Zapnutie CSS
-let html_use_css = 1
+" javascript
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType javascript set completefunc=javascriptcomplete#CompleteJS
 
-" Prevod súboru vimrc do html a pridanie odkazov do tohto súboru
-" Example:
-" Odkazom je komentár v tvare '*> Názov odkazu'
-" Cieľ odkazu má tvar '=> Názov odkazu' (musia mať identický text)
+" html
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType html set completefunc=htmlcomplete#CompleteTags
+autocmd FileType html set filetype=htmldjango
+autocmd FileType htmldjango vmap \tr <ESC>`>a'' %}<ESC>`<i{{% trans ''<ESC>
+
+" css
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType css set completefunc=csscomplete#CompleteCSS
+
+" common completion
+autocmd FileType c,cpp,java,php,python,html,css,javascript imap <C-Space> <C-X><C-O>
+autocmd FileType c,cpp,java,php,python,html,css,javascript imap <Nul> <C-X><C-O>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Utility
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" Convert vimrc to HTML
+" Link to section: *> Section name
+" Section: => Section name
 function! VimrcTOHtml()
 	TOhtml
 	try
@@ -576,225 +521,10 @@ function! VimrcTOHtml()
 	exe ":bd"
 endfunction
 
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Rôzne
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Nastavenie jazyka pre automatickú kontrolu na slovenský
-" Pre zapnutie kontroly treba spustiť :set spell
-" Predtým sa musia vygenerovať slovníky. Na generovanie sa používa štandardný
-" myspell slovník (napr. v /usr/share/myspell). Na vygenerovanie sa používa
-" mkspell.
-"set spelllang=sk
-
-" Automatický skok na prvú chybu
-set cf
-
-" Automatické načítanie doxygen syntaxe
-let g:load_doxygen_syntax=1
-" Zákaz automatického zvýraznenia prvej vety.
-let g:doxygen_javadoc_autobrief=0
-
-let c_space_errors=1
-"let c_no_bracket_error=1
-let c_no_curly_error=1
-let c_curly_error=1
-
-" Pri kopírovaní vo vim-e uloží do schránky
-set clipboard=unnamed,unnamedplus
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Optimalizácia výkonu
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Synchronizácia zvýrazňovania syntaxe od začiatku pri vstupe do bufferu
-" Pozor - dosť pomalé
-"autocmd BufEnter * syntax sync fromstart
-
-" Aktualizácia syntaxe min. 500 riadkov mimo obrazovku
-syntax sync minlines=500
-
-" Optimalizácia pre rýchle terminálové spojenia
-set ttyfast
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"   => Figlet
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-function! InsertFiglet()
-	let text = input("Text: ")
-	let font = input("Font: ", "smslant")
-	let lineBegin = input("Begin of line: ", " * ")
-	execute "r!figlet -w 150 ".shellescape(text)." -f ".shellescape(font)."|sed -e 's/\\(.*\\)/".lineBegin."\\1/'|sed -e 's/ \\+$//'"
-endfunction
-nmap \if :call InsertFiglet()<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nastavenia pluginov
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-" Nastavenia project pluginu
-let g:proj_flags="imstvcS"
-"                 |||||||
-"                 ||||||+ Zoraďovanie názvov
-"                 |||||+ Uzatvorenie okna projektu po výbere súboru
-"                 ||||+ Používanie vimgrep namiesto grep
-"                 |||+ Nastavenie veľkosti okna
-"                 ||+ Zobrazovanie syntaxe v projekte
-"                 |+ Povolenie Ctrl+W O
-"                 + Zobrazenie súboru a adresára v príkazovom riadku pri výbere
-
-" Nastavenie autora pre Ultisnips
-let g:UltiSnipsExpandTrigger="<TAB>"
-let g:UltiSnipsJumpForwardTrigger="<TAB>"
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nastavenia pre konkrétne typy súborov
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 function! ReformatXml()
 	%!xmllint --format --recover --encode utf-8 - 2>/dev/null
 endfunction
 
-" Funkcie pomáhajúce pri práci s jazykmi c, c++, php, alebo java
-"set errorformat+=%-GIn\ file\ included\ from\ %f:%l:%c\\,_
-"set errorformat+=%-GIn\ file\ included\ from\ %f:%l\\,
-"set errorformat+=%-Gfrom\ %f:%l\\,
-"set errorformat+=%-Gfrom\ %f:%l:%c\\,
-"let &errorformat="%f:%l:%c: %t%*[^:]:%m,%f:%l: %t%*[^:]:%m," . &errorformat
-let errormarker_erroricon = "/usr/kde/4.4/share/icons/oxygen/16x16/status/dialog-error.png"
-let errormarker_warningicon = "/usr/kde/4.4/share/icons/oxygen/16x16/status/dialog-warning.png"
-"set errorformat+=In\ file\ included\ from\ %f:%l:%c\\,
-let &errorformat="%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c:,%-Gfrom %f:%l\\,,-Gfrom %f:%l:%c\\,," . &errorformat
-
-"Nastavenie lokálneho vimrc
-let g:local_vimrc = {'names':['.local.vimrc'],'hash_fun':'LVRHashOfFile'}
-
-" Vykonanie kontroly PHP súboru PHP interpreterom
-function! CheckPhp()
-	let oldMakeprg=&makeprg
-	let oldErrorformat=&errorformat
-	setlocal makeprg=php\ -l\ %
-	setlocal errorformat=%m\ in\ %f\ on\ line\ %l
-	make
-	exe 'setlocal makeprg="'.escape(oldMakeprg, ' \"').'"'
-	exe 'setlocal errorformat="'.escape(oldErrorformat, ' \"').'"'
-endfunction
-
-" Vykonanie kontroly PHP súboru nástrojom phpcs
-function! RunPhpcs()
-	let oldErrorformat=&errorformat
-	setlocal errorformat+=\"%f\"\\,%l\\,%c\\,%t%*[a-zA-Z]\\,\"%m\"
-	let l:filename=@%
-	let l:phpcs_output=system('phpcs --report=csv '.l:filename)
-	"echo l:phpcs_output
-	let l:phpcs_list=split(l:phpcs_output, "\n")
-	unlet l:phpcs_list[0]
-	cexpr l:phpcs_list
-	cwindow
-	exe 'setlocal errorformat="'.escape(oldErrorformat, ' \"').'"'
-endfunction
-
-" Regenerovanie PHP tagov v aktuálnom adresári
-function! RebuildPhpTags()
-	silent execute "!find . -name '*.php' > ./cscope.files 2> /dev/null"
-	silent execute "!cscope -b &> /dev/null"
-	silent execute "!rm ./cscope.files &> /dev/null"
-	silent execute "!ctags -f tags --sort=yes -R . --fields=+aiS --extra=+q --totals=yes --PHP-kinds=+cf &> /dev/null"
-	cscope reset
-	cscope add cscope.out
-	"redraw!
-endfunction
-
-" Aktualizácia tagov pre aktuálne upravovaný súbor
-function! UpdateCurrentFilePhpTags()
-	silent execute "!ctags -f tags --sort=yes -a --fields=+iaS --extra=+q % &> /dev/null"
-	silent execute "!cscope -b % &> /dev/null"
-	cscope reset
-	cscope add cscope.out
-endfunction
-
-function! UpdateCurrentFileCTags()
-	silent execute "!ctags -f tags --sort=yes -a --c++-kinds=+p --fields=+iaS --extra=+qfg --language-force=C++ % &> /dev/null"
-	silent execute "!cscope -b % &> /dev/null"
-	cscope reset
-	cscope add cscope.out
-endfunction
-
-function! FileWritePost()
-	" štandardne nič, načítavam z .lvimrc
-endfunction
-
-
-autocmd FileType cs setlocal errorformat=
-	\%E%f(%l\\,%c):\ error\ CS%n:%m,
-	\%W%f(%l\\,%c):\ warning\ CS%n:%m,
-	\%E%>syntax\ error\\,%m,%Z%f(%l\\,%c):\ error\ CS%n:%m,
-	\%D%*\\a[%*\\d]:\ Entering\ directory\ `%f',
-	\%X%*\\a[%*\\d]:\ Leaving\ directory\ `%f',
-	\%DMaking\ %*\\a\ in\ %f,
-	\%G-%.%#
-autocmd FileType cs let current_compiler = "gmcs"
-autocmd FileType cs set makeprg=gmcs\ -warn:4\ *.cs
-autocmd FileType cs set foldmethod=marker
-" autocmd FileType cs set foldcolumn=5
-autocmd FileType cs set foldlevel=4
-autocmd FileType cs set foldmarker={,}
-autocmd FileType cs set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
-autocmd FileType cs set omnifunc=syntaxcomplete#Complete
-
-" Zvýraznenie názvy metód
-function! EnhanceCppSyntax()
-	syn match cppFuncDef "::\~\?\zs\h\w*\ze([^)]*\()\s*\(const\)\?\)\?$"
-	" hi def link cppFuncDef Special
-endfunction
-autocmd Syntax cpp call EnhanceCppSyntax()
-autocmd Syntax cpp hi doxygenEmphasisedWord ctermfg=250 cterm=bold
-autocmd BufNewFile *.cpp,*.h,*.c execute "set paste" | execute "normal i/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  ".g:snips_company."\r * =====================================================================\r */\r\r" | execute "set nopaste"
-autocmd BufNewFile *.php execute "set paste" | execute "normal i<?php\r/*\r * =====================================================================\r *        Version:  1.0\r *        Created:  ".strftime("%x")." ".strftime("%X")."\r *         Author:  ".g:snips_author."\r *        Company:  ".g:snips_company."\r * =====================================================================\r */\r?>\r" | execute "set nopaste"
-autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
-set errorformat+=%D%*\\a[%*\\d]:\ Entering\ directory\ `%f'
-
-" ui súbory
-function! RunDesigner()
-	!designer %&
-endfunction
-autocmd BufWinEnter *ui :call RunDesigner()
-
-autocmd FileType python set completeopt=menuone,menu,preview
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType javascript set completefunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType html set completefunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType css set completefunc=csscomplete#CompleteCSS
-
-" Nastavenie kopírovania hlavičky do implemntácie pre C++
-autocmd FileType c,cpp nmap <F5> "lYml[[kw"cye'l
-autocmd FileType c,cpp nmap <F6> :set paste<CR>ma:let @n=@/<CR>"lp==:s/\<virtual\>\s*//e<CR>:s/\<static\>\s*//e<CR>:s/\s*=\s*[^,)]*//ge<CR>:let @/=@n<CR>'ajf(b"cPa::<Esc>f;s<CR>{<CR>}<CR><Esc>kk:nohlsearch<CR>:set nopaste<CR>
-
-" Spoločné nastavenia pre jazyky syntakticky podobné C
-" autocmd FileType c,cpp,java,php map <buffer> <F9> :make -j 2<CR>
-autocmd FileType php set smartindent
-autocmd FileType c,cpp,java,php,python,html,css,javascript imap <C-Space> <C-X><C-O>
-autocmd FileType c,cpp,java,php,python,html,css,javascript imap <Nul> <C-X><C-O>
-
-" Regenerovanie tagov
-autocmd FileType c,cpp,java command! Crb !ctags --sort=yes -R --c++-kinds=+p --fields=+iaS --extra=+qf .
-autocmd FileType php command! Crb execute "silent make cscope" | execute "cscope reset" | execute "cscope add cscope.out"
-
-" Nastavenia pre c a c++
-autocmd FileType c,cpp set foldmethod=indent
-" autocmd FileType c,cpp set foldcolumn=5
-autocmd FileType c,cpp set foldlevel=6
-" Pridanie definície v hlavičkových súboroch (ifndef, define, endif)
-autocmd FileType c,cpp command! AddDef call C_InsertTemplate("preprocessor.ifndef-def-endif")
-
-" Nastavenia pre PHP
 function! ReplaceDiacritic()
 	execute "silent! " . a:firstline . "," . a:lastline . "s/Ľ/\\&#317;/g"
 	execute "silent! " . a:firstline . "," . a:lastline . "s/Š/\\&#352;/g"
@@ -834,112 +564,6 @@ function! ReplaceDiacritic()
 	execute "silent! " . a:firstline . "," . a:lastline . "s/Ú/\\&Uacute;/g"
 	execute "silent! " . a:firstline . "," . a:lastline . "s/ú/\\&uacute;/g"
 endfunction
-"autocmd FileType php map <buffer> <F9> :call CheckPhp()<CR>
-autocmd FileType php set syntax=php.doxygen
-autocmd FileType php command! Phpcs execute RunPhpcs()
-autocmd BufWritePost *.php call FileWritePost()
-autocmd BufWritePost *.cpp call FileWritePost()
-autocmd BufWritePost *.h call FileWritePost()
-autocmd BufRead,BufNewFile *.qml set filetype=qml
-autocmd FileType htmldjango inoremap <buffer> { {
-
-" V php syntaxi je napevno nastavené formátovanie odstavcov - vypínam
-" autocmd FileType php set formatoptions-=w
-autocmd FileType php setlocal comments=s1:/*,mb:*,ex:*/,://,:#
-
-autocmd FileType html set filetype=htmldjango
-autocmd FileType htmldjango inoremap <buffer> { {
-autocmd FileType htmldjango vmap \tr <ESC>`>a'' %}<ESC>`<i{{% trans ''<ESC>
-
-" Drobnosti pre PHP
-let php_baselib = 1
-let php_noShortTags = 1
-let php_parent_error_close = 1
-let php_parent_error_open = 1
-"let php_sync_method = 0
-let PHP_vintage_case_default_indent = 1
-let PHP_autoformatcomment = 0
-"let php_folding = 1
-"let php_sql_query = 1
-
-" Funkcie pre doplňovanie v PHP
-autocmd FileType php set completefunc=phpcomplete#CompletePHP
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType php set completeopt=menuone,menu,preview
-
-" Nastavenia pra Javu
-autocmd FileType java set tags=~/.javatags
-autocmd Filetype java setlocal omnifunc=javacomplete#Complete
-autocmd Filetype java setlocal completefunc=javacomplete#Complete
-
-" Nastavenia pre python
-let g:pymode_indent = 0
-let g:pymode_lint = 0
-let g:pymode_syntax = 0
-let g:pymode_options = 0
-let g:pymode_lint_ignore = "W191,E251,E501,E122,E123,E128,E121,E126"
-let g:pymode_lint_checker = "pyflakes,pep8,mccabe"
-let g:pymode_rope_extended_complete = 0
-let g:pymode_rope_completion = 0
-let g:pymode_rope_complete_on_dot = 0
-"let g:pymode_lint_onfly = 1
-let g:syntastic_php_phpcs_args="--tab-width=4"
-let g:syntastic_css_phpcs_args="--tab-width=4"
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_enable_balloons = 1
-
-autocmd FileType python setlocal complete+=k
-autocmd FileType python setlocal isk+=".,("
-"autocmd FileType python setlocal tags+=$HOME/.vim/tags/python
-autocmd BufRead *.py setlocal makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
-autocmd BufRead *.py setlocal efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
-function LoadVirtualenv()
-	py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-	project_base_dir = os.environ['VIRTUAL_ENV']
-	sys.path.insert(0, project_base_dir)
-	activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-	execfile(activate_this, dict(__file__=activate_this))
-EOF
-endfunction
-
-function Ultisnips_get_current_python_class()
-	let l:retval = ""
-	let l:line_declaring_class = search('^class\s\+', 'bnW')
-	if l:line_declaring_class != 0
-		let l:nameline = getline(l:line_declaring_class)
-		let l:classend = matchend(l:nameline, '\s*class\s\+')
-		let l:classnameend = matchend(l:nameline, '\s*class\s\+[A-Za-z0-9_]\+')
-		let l:retval = strpart(l:nameline, l:classend, l:classnameend-l:classend)
-	endif
-	return l:retval
-endfunction
-
-"function LessToCss()
-"	let current_file = shellescape(expand('%:p'))
-"	let filename = shellescape(expand('%:r'))
-"	let command = "silent !lessc " . current_file . " " . filename . ".css 2>&1"
-"	execute command
-"	endfunction
-"autocmd BufWritePost,FileWritePost *.less call LessToCss()
-"
-"function SassToCss()
-"	let current_file = shellescape(expand('%:p'))
-"	let filename = shellescape(expand('%:r'))
-"	let command = "silent !sassc " . current_file . " " . filename . ".css 2>&1"
-"	execute command
-"	endfunction
-"autocmd BufWritePost,FileWritePost *.scss call SassToCss()
-
-"nnoremap <Leader>m :w <BAR> !lessc % > %:t:r.css<CR><space>
-
-"autocmd BufWritePost,FileWritePost *.scss !sassc % %:t:r.css<CR>
-autocmd BufRead,BufNew *.scss setlocal makeprg=sassc\ %\ %:p:r.css
-autocmd BufWritePost,FileWritePost *.scss make!|redraw
 
 function! MailSettings()
 	setlocal textwidth=0
@@ -998,7 +622,6 @@ endfunction
 
 au BufReadPost * if getfsize(bufname("%")) > 512*1024 | set syntax= | endif
 
-"au VimEnter * if getfsize(bufname("%")) <= 512*1024 | call rainbow_parentheses#activate() | endif
 "au Syntax * RainbowParenthesesLoadRound
 "au Syntax * RainbowParenthesesLoadSquare
 "au Syntax * RainbowParenthesesLoadBraces
@@ -1021,4 +644,24 @@ au BufReadPost * if getfsize(bufname("%")) > 512*1024 | set syntax= | endif
 "      \ ['255',         '#eeeeee'],
 "      \ ]
 
-runtime local.vim
+function! CleanCSS()
+	try
+		silent execute "%s/\\t\\+$//g"
+	catch
+	endtry
+
+	try
+		silent execute "%s/[ ]\\+$//g"
+	catch
+	endtry
+
+	try
+		silent execute "%s/\\([^ ]\\){/\\1 {/g"
+	catch
+	endtry
+
+	try
+		silent execute "%s/:\\([^ ]\\)\\(.*\\);/: \\1\\2;/"
+	catch
+	endtry
+endfunction

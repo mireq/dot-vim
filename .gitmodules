@@ -1,75 +1,60 @@
-[submodule "bundle/vim-pathogen"]
-	path = bundle/vim-pathogen
-	url = git://github.com/tpope/vim-pathogen.git
-[submodule "bundle/vim-addon-mw-utils"]
-	path = bundle/vim-addon-mw-utils
-	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
-[submodule "bundle/tlib"]
-	path = bundle/tlib
-	url = git://github.com/vim-scripts/tlib.git
-[submodule "bundle/project"]
-	path = bundle/project
+[submodule "bundle/neobundle.vim"]
+	path = bundle/neobundle.vim
+	url = git://github.com/Shougo/neobundle.vim.git
+[submodule "bundle/project.tar.gz"]
+	path = bundle/project.tar.gz
 	url = git://github.com/vim-scripts/project.tar.gz.git
-[submodule "bundle/align"]
-	path = bundle/align
-	url = git://github.com/vim-scripts/Align.git
-[submodule "bundle/errormarker"]
-	path = bundle/errormarker
-	url = git://github.com/vim-scripts/errormarker.vim.git
-[submodule "bundle/vim-fugitive"]
-	path = bundle/vim-fugitive
-	url = git://github.com/tpope/vim-fugitive.git
-[submodule "bundle/vim-addon-local-vimrc"]
-	path = bundle/vim-addon-local-vimrc
-	url = git://github.com/MarcWeber/vim-addon-local-vimrc.git
-[submodule "bundle/gundo"]
-	path = bundle/gundo
-	url = git://github.com/sjl/gundo.vim.git
-[submodule "bundle/phpcomplete"]
-	path = bundle/phpcomplete
-	url = git://github.com/shawncplus/phpcomplete.vim.git
-[submodule "bundle/tagbar"]
-	path = bundle/tagbar
-	url = git://github.com/majutsushi/tagbar.git
-[submodule "bundle/a"]
-	path = bundle/a
-	url = git://github.com/vim-scripts/a.vim.git
-[submodule "bundle/ultisnips"]
-	path = bundle/ultisnips
-	url = git://github.com/SirVer/ultisnips.git
-[submodule "bundle/python-mode"]
-	path = bundle/python-mode
-	url = git://github.com/klen/python-mode.git
-[submodule "bundle/powerline"]
-	path = bundle/powerline
-	url = git://github.com/Lokaltog/powerline.git
-[submodule "bundle/vim-qml"]
-	path = bundle/vim-qml
-	url = git://github.com/peterhoeg/vim-qml.git
 [submodule "bundle/YouCompleteMe"]
 	path = bundle/YouCompleteMe
 	url = git://github.com/Valloric/YouCompleteMe.git
-[submodule "bundle/syntastic"]
-	path = bundle/syntastic
-	url = git://github.com/scrooloose/syntastic.git
-[submodule "bundle/python-mode"]
-	path = bundle/pythonmode
-	url = git://github.com/klen/python-mode.git
-[submodule "bundle/emmet-vim"]
-	path = bundle/emmet-vim
-	url = git://github.com/mattn/emmet-vim.git
-[submodule "bundle/vim-jade"]
-	path = bundle/vim-jade
-	url = git://github.com/digitaltoad/vim-jade.git
+[submodule "bundle/a.vim"]
+	path = bundle/a.vim
+	url = git://github.com/vim-scripts/a.vim.git
+[submodule "bundle/tagbar"]
+	path = bundle/tagbar
+	url = git://github.com/majutsushi/tagbar.git
+[submodule "bundle/gundo.vim"]
+	path = bundle/gundo.vim
+	url = git://github.com/sjl/gundo.vim.git
 [submodule "bundle/vim-bufferlist"]
 	path = bundle/vim-bufferlist
 	url = git://github.com/roblillack/vim-bufferlist.git
 [submodule "bundle/vim-snippets"]
 	path = bundle/vim-snippets
 	url = git://github.com/honza/vim-snippets.git
-[submodule "bundle/vim-signify"]
-	path = bundle/vim-signify
-	url = git://github.com/mhinz/vim-signify
+[submodule "bundle/ultisnips"]
+	path = bundle/ultisnips
+	url = git://github.com/SirVer/ultisnips.git
+[submodule "bundle/ctrlp.vim"]
+	path = bundle/ctrlp.vim
+	url = git://github.com/kien/ctrlp.vim.git
 [submodule "bundle/delimitMate"]
 	path = bundle/delimitMate
 	url = git://github.com/Raimondi/delimitMate.git
+[submodule "bundle/emmet-vim"]
+	path = bundle/emmet-vim
+	url = git://github.com/mattn/emmet-vim.git
+[submodule "bundle/syntastic"]
+	path = bundle/syntastic
+	url = git://github.com/scrooloose/syntastic.git
+[submodule "bundle/powerline"]
+	path = bundle/powerline
+	url = git://github.com/Lokaltog/powerline.git
+[submodule "bundle/python-mode"]
+	path = bundle/python-mode
+	url = git://github.com/klen/python-mode.git
+[submodule "bundle/vim-css3-syntax"]
+	path = bundle/vim-css3-syntax
+	url = git://github.com/hail2u/vim-css3-syntax.git
+[submodule "bundle/vim-signify"]
+	path = bundle/vim-signify
+	url = git://github.com/mhinz/vim-signify
+[submodule "bundle/vim-fugitive"]
+	path = bundle/vim-fugitive
+	url = git://github.com/tpope/vim-fugitive.git
+[submodule "bundle/vim-javascript"]
+	path = bundle/vim-javascript
+	url = git://github.com/pangloss/vim-javascript.git
+[submodule "bundle/vim-indent-guides"]
+	path = bundle/vim-indent-guides
+	url = git://github.com/nathanaelkane/vim-indent-guides.git
