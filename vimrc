@@ -425,6 +425,14 @@ if neobundle#tap('syntastic') "{{{
 endif
 "}}}
 
+if neobundle#tap('python-mode') "{{{
+	let g:pymode_options = 0
+	let g:pymode_rope_completion = 0
+	let g:pymode_rope_complete_on_dot = 0
+	let g:pymode_rope_completion_bind = '<C-Shift-Space>'
+endif
+"}}}
+
 if neobundle#tap('vim-fugitive') "{{{
 	function! neobundle#hooks.on_post_source(bundle)
 		call fugitive#detect(expand('#:p'))
