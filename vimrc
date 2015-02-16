@@ -24,8 +24,6 @@ set exrc
 
 " Enable file type detection
 filetype on
-filetype indent on
-filetype plugin on
 
 " Disable help
 noremap <F1> ""
@@ -123,6 +121,9 @@ NeoBundle 'vim-indent-guides'
 
 call neobundle#end()
 
+filetype indent on
+filetype plugin on
+
 " NeoBundleCheck
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -210,6 +211,7 @@ set display=lastline
 " Adjust indent
 xnoremap <Tab> >gv
 au BufEnter * xnoremap <Tab> >gv
+au InsertLeave * xnoremap <Tab> >gv
 xmap <BS> <gv
 
 command! RetabIndents call RetabIndents()
@@ -407,6 +409,7 @@ if neobundle#tap('ultisnips') "{{{
 	let g:UltiSnipsExpandTrigger="<TAB>"
 	let g:UltiSnipsJumpForwardTrigger="<TAB>"
 	let g:UltiSnipsSnippetDirectories=['UltiSnips']
+	let g:UltiSnipsTriggerInVisualMode=0
 	call neobundle#untap()
 endif
 "}}}
@@ -418,6 +421,7 @@ if neobundle#tap('syntastic') "{{{
 	let g:syntastic_check_on_wq = 0
 	let g:syntastic_enable_balloons = 1
 	let g:syntastic_rst_checkers=['']
+	let g:syntastic_python_checkers=['pylint']
 endif
 "}}}
 
