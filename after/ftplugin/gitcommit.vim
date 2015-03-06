@@ -15,8 +15,8 @@ endfunction
 nnoremap <buffer> <C-t> :call <SID>insertTime()<CR>
 inoremap <buffer> <C-t> <ESC>:call <SID>insertTime()<CR>i
 
-nnoremap <buffer> <C-r> irefs <ESC>:call <SID>insertTime()<CR>
-inoremap <buffer> <C-r> refs <ESC>:call <SID>insertTime()<CR>i
+nnoremap <buffer> <C-r> a, refs <ESC>:call <SID>insertTime()<CR>
+inoremap <buffer> <C-r> , refs <ESC>:call <SID>insertTime()<CR>i
 
-nnoremap <buffer> <C-c> icloses <ESC>:call <SID>insertTime()<CR>
-inoremap <buffer> <C-c> closes <ESC>:call <SID>insertTime()<CR>i
+nnoremap <buffer> <C-c> a, closes <ESC>:call <SID>insertTime()<CR>
+inoremap <buffer> <C-c> , closes <ESC>:call <SID>insertTime()<CR>i
