@@ -115,7 +115,7 @@ NeoBundle 'powerline', {'rtp': 'powerline/bindings/vim/'}
 NeoBundle 'python-mode', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
 NeoBundle 'vim-css3-syntax', {'lazy': 1, 'autoload': {'filetypes': ['css', 'scss']}}
 NeoBundle 'vim-signify', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
-NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog'] } }
+NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog', 'Gblame', 'Gdiff'] } }
 NeoBundle 'vim-javascript', {'lazy': 1, 'autoload': {'filetypes': ['javascript', 'html']}}
 NeoBundle 'vim-indent-guides'
 
@@ -405,6 +405,7 @@ endif
 if neobundle#tap('ultisnips') "{{{
 	function! neobundle#hooks.on_source(bundle)
 		silent! call UltiSnips#FileTypeChanged()
+		au BufEnter * call UltiSnips#FileTypeChanged()
 	endfunction
 	let g:UltiSnipsExpandTrigger="<TAB>"
 	let g:UltiSnipsJumpForwardTrigger="<TAB>"
@@ -417,7 +418,7 @@ endif
 if neobundle#tap('syntastic') "{{{
 	let g:syntastic_php_phpcs_args="--tab-width=4"
 	let g:syntastic_css_phpcs_args="--tab-width=4"
-	let g:syntastic_auto_loc_list = 0
+	let g:syntastic_auto_loc_list = 1
 	let g:syntastic_check_on_wq = 0
 	let g:syntastic_enable_balloons = 1
 	let g:syntastic_rst_checkers=['']
@@ -430,6 +431,10 @@ if neobundle#tap('python-mode') "{{{
 	let g:pymode_rope_completion = 0
 	let g:pymode_rope_complete_on_dot = 0
 	let g:pymode_rope_completion_bind = '<C-Shift-Space>'
+	let g:pymode_indent = 0
+	let g:pymode_syntax = 0
+	let g:pymode_lint = 0
+	let g:pymode_folding = 0
 endif
 "}}}
 
@@ -450,12 +455,10 @@ if neobundle#tap('vim-indent-guides') "{{{
 	call neobundle#untap()
 endif
 "}}}
-autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234
-autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=#262626   ctermbg=235
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234
+"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=#262626   ctermbg=235
 
-augroup UltiSnipsFileType
-	autocmd FileType * silent! call UltiSnips#FileTypeChanged()
-augroup END
+autocmd FileType * silent! call UltiSnips#FileTypeChanged()
 
 function Ultisnips_get_current_python_class()
 	let l:retval = ""
@@ -465,6 +468,18 @@ function Ultisnips_get_current_python_class()
 		let l:classend = matchend(l:nameline, '\s*class\s\+')
 		let l:classnameend = matchend(l:nameline, '\s*class\s\+[A-Za-z0-9_]\+')
 		let l:retval = strpart(l:nameline, l:classend, l:classnameend-l:classend)
+	endif
+	return l:retval
+endfunction
+
+function Ultisnips_get_current_python_method()
+	let l:retval = ""
+	let l:line_declaring_method = search('\s*def\s\+', 'bnW')
+	if l:line_declaring_method != 0
+		let l:nameline = getline(l:line_declaring_method)
+		let l:methodend = matchend(l:nameline, '\s*def\s\+')
+		let l:methodnameend = matchend(l:nameline, '\s*def\s\+[A-Za-z0-9_]\+')
+		let l:retval = strpart(l:nameline, l:methodend, l:methodnameend-l:methodend)
 	endif
 	return l:retval
 endfunction
@@ -483,10 +498,9 @@ autocmd FileType c,cpp nmap <F5> "lYml[[kw"cye'l
 autocmd FileType c,cpp nmap <F6> :set paste<CR>ma:let @n=@/<CR>"lp==:s/\<virtual\>\s*//e<CR>:s/\<static\>\s*//e<CR>:s/\s*=\s*[^,)]*//ge<CR>:let @/=@n<CR>'ajf(b"cPa::<Esc>f;s<CR>{<CR>}<CR><Esc>kk:nohlsearch<CR>:set nopaste<CR>
 autocmd FileType c,cpp set foldmethod=indent
 autocmd FileType c,cpp set foldlevel=6
-autocmd FileType c,cpp command! AddDef call C_InsertTemplate("preprocessor.ifndef-def-endif")
 
 " python
-autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
+autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\rfrom __future__ import unicode_literals\r" | execute "set nopaste"
 autocmd FileType python set completeopt=menuone,menu,preview
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
