@@ -4,6 +4,10 @@ def ${1:__init__}(self, ${2:*args, **kwargs}):
 ${0}
 endsnippet
 
+snippet callsuper "Call super method"
+super(`!v Ultisnips_get_current_python_class()`, self).${1:`!v Ultisnips_get_current_python_method()`}($0)
+endsnippet
+
 snippet django_label "Django label"
 def get_${1:field}(self, obj):
 	cls = "none"
