@@ -13,27 +13,23 @@ Dependencies
 Install
 -------
 
-    git clone https://github.com/mireq/dot-vim.git .vim
+    cd ~
+    git --recursive clone https://github.com/mireq/dot-vim.git .vim
     ln -s ~/.vim/vimrc ~/.vimrc
     cd .vim
     mkdir backup
     mkdir spell
     mkdir tmp
     mkdir undodir
-    git submodule init
-    git submodule update
     echo "stty -ixon" >> ~/.bashrc
-
-    # locate libclang.so
-    ln -s /path/to/libclang.so /usr/lib/libclang.so
-
-    vim local.vim
+    cd bundle/YouCompleteMe
+    ./install.sh --clang-completer
+    cd ~
 
 Shortcuts
 ---------
 
 * `Ctrl-S` -- Save
-* `Ctrl-Space` -- Auto completion
 * `F3` -- Buffer list
 * `F7` -- Gundo tree
 * `F8` -- Toggle project tree
