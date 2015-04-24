@@ -12,7 +12,7 @@ snippet django_label "Django label"
 def get_${1:field}(self, obj):
 	cls = "none"
 	text =  ""
-	return format_html(u'<span class="label label-{0}">{1}</span>', cls, unicode(text))
+	return render_to_string("admin/inc/label.html", {"class": cls, "label": unicode(text)})
 get_$1.short_description = _("${2:desc}")
 get_$1.allow_tags = True
 get_$1.admin_order_field = "${3:order}"
