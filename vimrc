@@ -298,7 +298,7 @@ endif
 
 " Whitespace symbols
 if has("multi_byte")
-	set lcs=tab:\⁞\ ,trail:•,extends:>,precedes:<,nbsp:¤"
+	set lcs=tab:\⁝\ ,trail:•,extends:>,precedes:<,nbsp:¤"
 	let &sbr = nr2char(8618).' '
 else
 	set lcs=tab:>\ ,extends:>,precedes:<,trail:-

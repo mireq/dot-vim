@@ -144,5 +144,5 @@ hi mailQuoted2     ctermfg=94
 hi mailQuoted3     ctermfg=24
 hi mailQuoted4     ctermfg=88
 
-hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234
-hi IndentGuidesEven  guibg=#262626   ctermbg=235
+hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234 ctermfg=8     guifg=#7f7f7f
+hi IndentGuidesEven guibg=#262626   ctermbg=235 ctermfg=8     guifg=#7f7f7f
