@@ -398,6 +398,7 @@ if neobundle#tap('vim-bufferlist') "{{{
 	function! neobundle#tapped.hooks.on_post_source(bundle)
 		map <silent> <F3> :call BufferList()<CR>
 	endfunction
+	autocmd BufEnter __BUFFERLIST__ setlocal lcs=
 	call neobundle#untap()
 endif
 "}}}
