@@ -118,6 +118,7 @@ NeoBundle 'vim-signify', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog', 'Gblame', 'Gdiff'] } }
 NeoBundle 'vim-javascript', {'lazy': 1, 'autoload': {'filetypes': ['javascript', 'html']}}
 NeoBundle 'vim-indent-guides'
+NeoBundle 'nerdcommenter', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 
 call neobundle#end()
 
@@ -398,7 +399,6 @@ if neobundle#tap('vim-bufferlist') "{{{
 	function! neobundle#tapped.hooks.on_post_source(bundle)
 		map <silent> <F3> :call BufferList()<CR>
 	endfunction
-	autocmd BufEnter __BUFFERLIST__ setlocal lcs=
 	call neobundle#untap()
 endif
 "}}}
