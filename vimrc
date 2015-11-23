@@ -405,7 +405,8 @@ endif
 "}}}
 
 if neobundle#tap('ultisnips') "{{{
-	function! neobundle#hooks.on_source(bundle)
+	"function! neobundle#hooks.on_source(bundle)
+	function! neobundle#tapped.hooks.on_post_source(bundle)
 		silent! call UltiSnips#FileTypeChanged()
 		au BufEnter * call UltiSnips#FileTypeChanged()
 	endfunction
