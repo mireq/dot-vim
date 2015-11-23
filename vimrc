@@ -119,6 +119,7 @@ NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gc
 NeoBundle 'vim-javascript', {'lazy': 1, 'autoload': {'filetypes': ['javascript', 'html']}}
 NeoBundle 'vim-indent-guides'
 NeoBundle 'nerdcommenter', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
+NeoBundle 'editorconfig'
 
 call neobundle#end()
 

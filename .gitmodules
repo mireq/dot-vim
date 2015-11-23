@@ -61,3 +61,6 @@
 [submodule "bundle/nerdcommenter"]
 	path = bundle/nerdcommenter
 	url = git://github.com/scrooloose/nerdcommenter.git
+[submodule "bundle/editorconfig"]
+	path = bundle/editorconfig
+	url = git://github.com/editorconfig/editorconfig-vim.git
