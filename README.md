@@ -14,7 +14,7 @@ Install
 -------
 
     cd ~
-    git --recursive clone https://github.com/mireq/dot-vim.git .vim
+    git clone --recursive https://github.com/mireq/dot-vim.git .vim
     ln -s ~/.vim/vimrc ~/.vimrc
     cd .vim
     mkdir backup
