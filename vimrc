@@ -106,7 +106,7 @@ NeoBundle 'vim-bufferlist', {'lazy': 1, 'autoload': {'mappings': ['<F3>']}}
 NeoBundle 'killor', {'lazy': 1, 'autoload': {'filetypes': 'python'}}
 NeoBundle 'vim-snippets', {'lazy': 1, 'autoload': { 'on_source': ['ultisnips'] } }
 NeoBundle 'ultisnips', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
-NeoBundle 'YouCompleteMe', {'lazy': 1, 'augroup': 'youcompletemeStart', 'autoload': { 'insert': 1, }, 'build': { 'unix': 'git submodule update --init --recursive;./install.sh --clang-completer', }, 'build_commands': 'cmake', 'disabled': !has('python'), 'vim_version': '7.3.584', 'depends': 'ultisnips'}
+NeoBundle 'YouCompleteMe', {'lazy': 1, 'augroup': 'youcompletemeStart', 'autoload': { 'insert': 1, }, 'build': { 'unix': 'git submodule update --init --recursive;./install.py --clang-completer', }, 'build_commands': 'cmake', 'disabled': !has('python'), 'vim_version': '7.3.584', 'depends': 'ultisnips'}
 NeoBundle 'ctrlp.vim', {'lazy': 1, 'autoload': {'commands': 'CtrlP', 'mappings': '<c-p>',}}
 NeoBundle 'delimitMate', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 NeoBundle 'emmet-vim', {'lazy': 1, 'autoload': {'filetypes': ['html', 'htmldjango']}}
