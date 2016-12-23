@@ -364,6 +364,7 @@ set completeopt=menuone,menu
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+
 " Complete shortcuts
 imap <C-Space> <C-X><C-I>
 imap <Nul> <C-X><C-I>
@@ -433,10 +434,10 @@ endif
 
 if neobundle#tap('ultisnips') "{{{
 	"function! neobundle#hooks.on_source(bundle)
-	function! neobundle#tapped.hooks.on_post_source(bundle)
-		silent! call UltiSnips#FileTypeChanged()
-		au BufEnter * call UltiSnips#FileTypeChanged()
-	endfunction
+	"function! neobundle#tapped.hooks.on_post_source(bundle)
+	"	silent! call UltiSnips#FileTypeChanged()
+	"	au BufEnter * call UltiSnips#FileTypeChanged()
+	"endfunction
 	let g:UltiSnipsExpandTrigger="<TAB>"
 	let g:UltiSnipsJumpForwardTrigger="<TAB>"
 	let g:UltiSnipsSnippetDirectories=['UltiSnips']
@@ -504,8 +505,6 @@ endif
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=#262626   ctermbg=235
 
-autocmd FileType * silent! call UltiSnips#FileTypeChanged()
-
 function Ultisnips_get_current_python_class()
 	let l:retval = ""
 	let l:line_declaring_class = search('^class\s\+', 'bnW')
@@ -529,6 +528,8 @@ function Ultisnips_get_current_python_method()
 	endif
 	return l:retval
 endfunction
+
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
