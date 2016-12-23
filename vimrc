@@ -217,6 +217,8 @@ au InsertLeave * xnoremap <Tab> >gv
 xmap <BS> <gv
 
 command! RetabIndents call RetabIndents()
+command! Python2Completer :YcmCompleter RestartServer /usr/bin/python2
+command! Python3Completer :YcmCompleter RestartServer /usr/bin/python3
 
 func! RetabIndents()
 	execute '%!unexpand --first-only -t '.&ts
