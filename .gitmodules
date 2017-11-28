@@ -64,3 +64,6 @@
 [submodule "bundle/editorconfig"]
 	path = bundle/editorconfig
 	url = git://github.com/editorconfig/editorconfig-vim.git
+[submodule "bundle/vim-browser-reload-linux"]
+	path = bundle/vim-browser-reload-linux
+	url = https://github.com/lordm/vim-browser-reload-linux.git
