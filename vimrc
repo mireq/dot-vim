@@ -115,11 +115,14 @@ NeoBundle 'powerline', {'rtp': 'powerline/bindings/vim/'}
 NeoBundle 'python-mode', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
 NeoBundle 'vim-css3-syntax', {'lazy': 1, 'autoload': {'filetypes': ['css', 'scss']}}
 NeoBundle 'vim-signify', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
-NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog', 'Gblame', 'Gdiff'] } }
+NeoBundle 'vim-fugitive'
 NeoBundle 'vim-javascript', {'lazy': 1, 'autoload': {'filetypes': ['javascript', 'html']}}
 NeoBundle 'vim-indent-guides'
 NeoBundle 'nerdcommenter', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
+NeoBundle 'vim-browser-reload-linux'
 NeoBundle 'editorconfig'
+
+" NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog', 'Gblame', 'Gdiff'] } }
 
 call neobundle#end()
 
