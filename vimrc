@@ -475,6 +475,7 @@ if neobundle#tap('python-mode') "{{{
 	let g:pymode_syntax = 0
 	let g:pymode_lint = 0
 	let g:pymode_folding = 0
+	let g:pymode_rope_autoimport = 1
 endif
 "}}}
 
@@ -749,3 +750,5 @@ function! CleanCSS()
 	catch
 	endtry
 endfunction
+
+"let g:ctrlp_use_caching = 0
