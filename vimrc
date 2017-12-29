@@ -110,7 +110,8 @@ NeoBundle 'YouCompleteMe', {'lazy': 1, 'augroup': 'youcompletemeStart', 'autoloa
 NeoBundle 'ctrlp.vim', {'lazy': 1, 'autoload': {'commands': 'CtrlP', 'mappings': '<c-p>',}}
 NeoBundle 'delimitMate', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 NeoBundle 'emmet-vim', {'lazy': 1, 'autoload': {'filetypes': ['html', 'htmldjango']}}
-NeoBundle 'syntastic', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript']}}
+"NeoBundle 'syntastic', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript']}}
+NeoBundle 'ale', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript']}}
 NeoBundle 'powerline', {'rtp': 'powerline/bindings/vim/'}
 NeoBundle 'python-mode', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
 NeoBundle 'vim-css3-syntax', {'lazy': 1, 'autoload': {'filetypes': ['css', 'scss']}}

@@ -67,3 +67,9 @@
 [submodule "bundle/vim-browser-reload-linux"]
 	path = bundle/vim-browser-reload-linux
 	url = https://github.com/lordm/vim-browser-reload-linux.git
+[submodule "bundle/ale"]
+	path = bundle/ale
+	url = https://github.com/w0rp/ale.git
+[submodule "pack/git-plugins/start/ale"]
+	path = pack/git-plugins/start/ale
+	url = https://github.com/w0rp/ale
