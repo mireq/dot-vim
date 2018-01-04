@@ -371,8 +371,10 @@ autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " Set cursor shape
 let &t_SI = "\<Esc>[6 q"
-let &t_SR = "\<Esc>[4 q"
 let &t_EI = "\<Esc>[2 q"
+if v:version > 704 || v:version == 704 && has('patch687')
+	let &t_SR = "\<Esc>[4 q"
+end
 
 " Complete shortcuts
 imap <C-Space> <C-X><C-I>
