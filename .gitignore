@@ -1,1 +1,5 @@
-bundle/.neobundle
+/bundle/.neobundle
+/.netrwhist
+/backup
+/tmp
+/undodir
