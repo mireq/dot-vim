@@ -110,7 +110,6 @@ NeoBundle 'YouCompleteMe', {'lazy': 1, 'augroup': 'youcompletemeStart', 'autoloa
 NeoBundle 'ctrlp.vim', {'lazy': 1, 'autoload': {'commands': 'CtrlP', 'mappings': '<c-p>',}}
 NeoBundle 'delimitMate', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 NeoBundle 'emmet-vim', {'lazy': 1, 'autoload': {'filetypes': ['html', 'htmldjango']}}
-"NeoBundle 'syntastic', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript']}}
 NeoBundle 'ale', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript']}}
 NeoBundle 'powerline', {'rtp': 'powerline/bindings/vim/'}
 NeoBundle 'python-mode', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
@@ -456,14 +455,12 @@ if neobundle#tap('ultisnips') "{{{
 endif
 "}}}
 
-if neobundle#tap('syntastic') "{{{
-	let g:syntastic_php_phpcs_args="--tab-width=4"
-	let g:syntastic_css_phpcs_args="--tab-width=4"
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_wq = 0
-	let g:syntastic_enable_balloons = 1
-	let g:syntastic_rst_checkers=['']
-	let g:syntastic_python_checkers=['pylint']
+if neobundle#tap('ale') "{{{
+	let g:ale_lint_on_text_changed="never"
+	let g:ale_lint_on_enter=0
+	let g:ale_lint_on_filetype_changed=0
+	let g:ale_lint_on_save=1
+	let g:ale_lint_on_insert_leave=0
 endif
 "}}}
 
