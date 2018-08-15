@@ -564,6 +564,11 @@ autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
 autocmd BufRead *.py setlocal makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py setlocal efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+au BufNewFile,BufRead *.jinja set ft=htmldjango
+
+" Disable indentkeys
+set indentkeys-=<:>
+
 let g:python_recommended_style=0
 
 " javascript
