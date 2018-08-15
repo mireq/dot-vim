@@ -179,7 +179,7 @@ let html_use_css = 1
 set wildmenu
 set wildchar=<Tab>
 set wildmode=longest:full,full
-set wildignore=Ui_*,*.git,*.pyc
+set wildignore=Ui_*,*.git,*.pyc,*.qmlc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Formating
