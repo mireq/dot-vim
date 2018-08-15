@@ -428,6 +428,7 @@ endif
 "}}}
 
 if neobundle#tap('gundo.vim') "{{{
+	let g:gundo_prefer_python3=1
 	function! neobundle#tapped.hooks.on_post_source(bundle)
 		nmap <F7> :GundoToggle<CR>
 	endfunction
