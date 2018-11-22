@@ -344,6 +344,9 @@ function! UpdateLcs()
 	if (&previewwindow)
 		setlocal nolist
 	endif
+	if (bufname('%') == "__BUFFERLIST__")
+		setlocal nolist
+	endif
 endfunction
 
 autocmd BufEnter,BufWinEnter,WinEnter,CmdwinEnter * call UpdateLcs()
