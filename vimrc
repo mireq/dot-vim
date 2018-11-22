@@ -499,6 +499,7 @@ if neobundle#tap('vim-indent-guides') "{{{
 	let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'project']
 	let g:indent_guides_space_guides = 0
 	let g:indent_guides_start_level = 1
+	let g:indent_guides_indent_levels = 6
 	call neobundle#untap()
 endif
 "}}}
