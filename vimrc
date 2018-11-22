@@ -311,6 +311,9 @@ syntax on
 " Fast tty (no optimization)
 set ttyfast
 
+" Fast regexp engine
+set regexpengine=1
+
 " Automatic sync (slow!)
 " autocmd BufEnter * syntax sync fromstart
 
