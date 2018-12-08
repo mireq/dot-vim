@@ -122,6 +122,7 @@ NeoBundle 'vim-indent-guides'
 NeoBundle 'nerdcommenter', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 NeoBundle 'vim-browser-reload-linux'
 NeoBundle 'editorconfig'
+NeoBundle 'ctrlp-py-matcher'
 
 " NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog', 'Gblame', 'Gdiff'] } }
 
@@ -521,6 +522,20 @@ if neobundle#tap('vim-javascript') "{{{
 endif
 "}}}
 
+if neobundle#tap('ctrlp.vim') "{{{
+	"let g:ctrlp_use_caching = 0
+	let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+	if executable('ag')
+		let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+	endif
+endif
+"}}}
+
+if neobundle#tap('ctrlp-py-matcher') "{{{
+	let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+"}}}
+
 
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234
 "autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=#262626   ctermbg=235
@@ -766,4 +781,3 @@ function! CleanCSS()
 	endtry
 endfunction
 
-"let g:ctrlp_use_caching = 0
