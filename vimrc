@@ -582,7 +582,7 @@ autocmd FileType c,cpp set foldmethod=indent
 autocmd FileType c,cpp set foldlevel=6
 
 " python
-autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\rfrom __future__ import unicode_literals\r" | execute "set nopaste"
+autocmd BufNewFile *.py execute "set paste" | execute "normal i# -*- coding: utf-8 -*-\r" | execute "set nopaste"
 autocmd FileType python set completeopt=menuone,menu,preview
 autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
