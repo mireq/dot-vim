@@ -525,8 +525,12 @@ endif
 if neobundle#tap('ctrlp.vim') "{{{
 	"let g:ctrlp_use_caching = 0
 	let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+	let g:ctrlp_follow_symlinks = 1
 	if executable('ag')
-		let g:ctrlp_user_command = 'ag %s -U -l --nocolor -g ""'
+		let g:ctrlp_user_command = 'ag --ignore-case --nogroup --hidden --follow
+			\ -U -p ~/.agignore
+			\ -l -m 50000
+			\ %s -g ""'
 	endif
 endif
 "}}}
