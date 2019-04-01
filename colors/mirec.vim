@@ -41,7 +41,7 @@ hi Keyword         ctermfg=227   guifg=#ffff5f gui=bold cterm=bold
 hi Label           ctermfg=229   guifg=#ffffaf gui=bold,underline cterm=bold,underline
 hi LineNr          ctermfg=8     ctermbg=235   guifg=#7f7f7f guibg=#262626
 hi Macro           ctermfg=157   guifg=#afffaf gui=bold cterm=bold
-hi MatchParen      ctermfg=192   ctermbg=233   guifg=#d7ff87 guibg=#121212 cterm=bold,reverse
+hi MatchParen      ctermfg=233   ctermbg=192   guifg=#121212 guibg=#d7ff87 cterm=NONE,bold gui=NONE,bold
 hi ModeMsg         ctermfg=181   guifg=#d7afaf gui=bold cterm=bold
 hi MoreMsg         ctermfg=231   guifg=#ffffff gui=bold cterm=bold
 hi NonText         ctermfg=104   guifg=#8787d7
