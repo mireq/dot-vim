@@ -40,9 +40,6 @@
 [submodule "bundle/powerline"]
 	path = bundle/powerline
 	url = git://github.com/Lokaltog/powerline.git
-[submodule "bundle/python-mode"]
-	path = bundle/python-mode
-	url = git://github.com/klen/python-mode.git
 [submodule "bundle/vim-css3-syntax"]
 	path = bundle/vim-css3-syntax
 	url = git://github.com/hail2u/vim-css3-syntax.git
@@ -76,3 +73,6 @@
 [submodule "bundle/ctrlp-py-matcher"]
 	path = bundle/ctrlp-py-matcher
 	url = https://github.com/FelikZ/ctrlp-py-matcher
+[submodule "bundle/python-mode"]
+	path = bundle/python-mode
+	url = https://github.com/python-mode/python-mode
