@@ -70,7 +70,7 @@ syn match Attribute "\.\l\w*\>" display
 syn match CallStaticClass "\<\u\w*\>" display
 syn match CallClass "\<\u\w*\s*\((\)\@=" display
 "" zzast_callfunc.vim
-"syn match CallFunction "\<\l\w*\s*\((\)\@=" display
+syn match CallFunction "\<\l\w*\s*\((\)\@=" display
 syn match CallPrivateFunction "\<_\w*\s*\((\)\@=" display
 "" zzast_define.vim
 "syn match Assign "=" display
