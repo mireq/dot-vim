@@ -494,14 +494,6 @@ if neobundle#tap('python-mode') "{{{
 endif
 "}}}
 
-if neobundle#tap('vim-fugitive') "{{{
-	function! neobundle#hooks.on_post_source(bundle)
-		call fugitive#detect(expand('#:p'))
-	endfunction
-	call neobundle#untap()
-endif
-"}}}
-
 if neobundle#tap('vim-indent-guides') "{{{
 	let g:indent_guides_auto_colors = 0
 	let g:indent_guides_enable_on_vim_startup = 1
