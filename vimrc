@@ -111,7 +111,7 @@ NeoBundle 'YouCompleteMe'
 NeoBundle 'ctrlp.vim', {'lazy': 1, 'autoload': {'commands': 'CtrlP', 'mappings': '<c-p>',}}
 NeoBundle 'delimitMate', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 NeoBundle 'emmet-vim', {'lazy': 1, 'autoload': {'filetypes': ['html', 'htmldjango']}}
-NeoBundle 'ale', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript']}}
+NeoBundle 'ale', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript', 'dart']}}
 NeoBundle 'powerline', {'rtp': 'powerline/bindings/vim/'}
 NeoBundle 'python-mode', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
 NeoBundle 'vim-css3-syntax', {'lazy': 1, 'autoload': {'filetypes': ['css', 'scss']}}
@@ -123,6 +123,11 @@ NeoBundle 'nerdcommenter', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
 NeoBundle 'vim-browser-reload-linux'
 NeoBundle 'editorconfig'
 NeoBundle 'ctrlp-py-matcher'
+NeoBundle 'rainbow', {'lazy': 1, 'autoload': {'filetypes': ['dart']}}
+NeoBundle 'vim-glsl'
+
+NeoBundle 'dart-vim-plugin'
+NeoBundle 'vim-flutter'
 
 " NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog', 'Gblame', 'Gdiff'] } }
 
@@ -460,7 +465,7 @@ if neobundle#tap('ultisnips') "{{{
 	"endfunction
 	let g:UltiSnipsExpandTrigger="<TAB>"
 	let g:UltiSnipsJumpForwardTrigger="<TAB>"
-	let g:UltiSnipsSnippetDirectories=['UltiSnips']
+	let g:UltiSnipsSnippetDirectories = ['.vim/UltiSnips', 'UltiSnips']
 	let g:UltiSnipsTriggerInVisualMode=0
 	call neobundle#untap()
 endif
@@ -510,12 +515,12 @@ endif
 
 if neobundle#tap('vim-javascript') "{{{
 	let g:javascript_conceal = 1
-	let g:javascript_conceal_function   = "ƒ"
-	let g:javascript_conceal_null       = "ø"
+	let g:javascript_conceal_function   = "∫"
+	let g:javascript_conceal_null       = "Ø"
 	let g:javascript_conceal_this       = "@"
-	let g:javascript_conceal_return     = "⇚"
+	let g:javascript_conceal_return     = "❱"
 	let g:javascript_conceal_undefined  = "¿"
-	let g:javascript_conceal_NaN        = "ℕ"
+	let g:javascript_conceal_NaN        = "Ṉ"
 	let g:javascript_conceal_prototype  = "¶"
 	let g:javascript_conceal_static     = "•"
 	let g:javascript_conceal_super      = "Ω"
@@ -529,7 +534,7 @@ if neobundle#tap('ctrlp.vim') "{{{
 	let g:ctrlp_working_path_mode = 'raw'
 	if executable('ag')
 		let g:ctrlp_user_command = 'ag --ignore-case --nogroup --hidden --follow
-			\ -U -p ~/.agignore
+			\ -U -p ~/.ignore
 			\ -l -m 50000
 			\ %s -g ""'
 	endif
@@ -538,6 +543,42 @@ endif
 
 if neobundle#tap('ctrlp-py-matcher') "{{{
 	let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endif
+"}}}
+
+if neobundle#tap('vim-flutter') "{{{
+	" Enable Flutter menu
+	"call FlutterMenu()
+	
+	" Some of these key choices were arbitrary;
+	" it's just an example.
+	nnoremap <leader>fa :FlutterRun<cr>
+	nnoremap <leader>fq :FlutterQuit<cr>
+	nnoremap <leader>fr :FlutterHotReload<cr>
+	nnoremap <leader>fR :FlutterHotRestart<cr>
+	nnoremap <leader>fD :FlutterVisualDebug<cr>
+endif
+"}}}
+"
+"}}}
+
+if neobundle#tap('rainbow') "{{{
+	let g:rainbow_active = 1
+	let g:rainbow_conf = {
+	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
+	\	'ctermfgs': ['45', '40', '190', '208', '196', '200', '141'],
+	\	'guis': [''],
+	\	'cterms': [''],
+	\	'operators': '_,_',
+	\	'contains_prefix': 'TOP',
+	\	'parentheses_options': '',
+	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
+	\	'separately': {
+	\		'*': {},
+	\		'css': 0,
+	\		'sh': 0,
+	\	}
+	\}
 endif
 "}}}
 
@@ -786,3 +827,10 @@ function! CleanCSS()
 	endtry
 endfunction
 
+function! WriteCreatingDirs()
+	execute 'normal !mkdir -p %:h'
+	execute 'normal write'
+endfunction
+command W call WriteCreatingDirs()
+
+let c_no_curly_error = 1
