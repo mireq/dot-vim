@@ -7,9 +7,7 @@
 "
 "
 " Maintainer: Miroslav Bendík
-" Version: 0.2
-" Last Change: 15.02.2015
-" Sections:
+" Version: 0.3
 " -------------------------------------------------------------
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -20,7 +18,7 @@
 set nocompatible
 
 " Enable vimrc
-set exrc
+"set exrc
 
 " Enable file type detection
 filetype on
@@ -36,7 +34,7 @@ map <C-up> gk
 map <silent> <Home> ^
 imap <silent> <Home> <C-O>^
 
-" Better line breaks
+" Long lines are on same indent level
 set breakindent
 
 " Enable history
@@ -73,6 +71,7 @@ set mousemodel=popup
 " Integrate clipboard
 set clipboard=unnamed,unnamedplus
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Build
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -83,60 +82,283 @@ map <F9> :make -j 2<CR>
 " Auto jump to first error
 set cf
 
-"let errormarker_erroricon = "/usr/share/icons/oxygen/16x16/status/dialog-error.png"
-"let errormarker_warningicon = "/usr/share/icons/oxygen/16x16/status/dialog-warning.png"
 let &errorformat="%-GIn file included from %f:%l:%c\\,,%-GIn file included from %f:%l:%c:,%-Gfrom %f:%l\\,,-Gfrom %f:%l:%c\\,," . &errorformat
 set errorformat+=%D%*\\a[%*\\d]:\ Entering\ directory\ `%f'
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NeoBundle
+" => Auto complete
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-if has('vim_starting')
-	set runtimepath+=~/.vim/bundle/neobundle.vim/
-endif
+set completeopt=menuone,menu
+"               |       |
+"               |       + Display popup
+"               + Display when single option
 
-call neobundle#begin(expand('~/.vim/bundle'))
+" Hide help when cursor moved
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
-NeoBundle 'project.tar.gz', {'lazy': 1, 'autoload': {'mappings': ['<F8>']}}
-NeoBundle 'a.vim', {'lazy': 1, 'autoload': {'mappings': ['<F12>']}}
-NeoBundle 'tagbar', {'lazy': 1, 'autoload': {'mappings': ['<F11>']}}
-NeoBundle 'gundo.vim', {'lazy': 1, 'autoload': {'mappings': ['<F7>']}}
-NeoBundle 'vim-bufferlist', {'lazy': 1, 'autoload': {'mappings': ['<F3>']}}
-NeoBundle 'killor', {'lazy': 1, 'autoload': {'filetypes': 'python'}}
-NeoBundle 'vim-snippets', {'lazy': 1, 'autoload': { 'on_source': ['ultisnips'] } }
-NeoBundle 'ultisnips', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
-"NeoBundle 'YouCompleteMe', {'lazy': 1, 'augroup': 'youcompletemeStart', 'autoload': { 'insert': 1, }, 'build': { 'unix': 'git submodule update --init --recursive;./install.py --clang-completer', }, 'build_commands': 'cmake', 'disabled': !has('python'), 'vim_version': '7.3.584', 'depends': 'ultisnips'}
-NeoBundle 'YouCompleteMe'
-NeoBundle 'ctrlp.vim', {'lazy': 1, 'autoload': {'commands': 'CtrlP', 'mappings': '<c-p>',}}
-NeoBundle 'delimitMate', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
-NeoBundle 'emmet-vim', {'lazy': 1, 'autoload': {'filetypes': ['html', 'htmldjango']}}
-NeoBundle 'ale', {'lazy': 1, 'autoload': {'filetypes': ['python', 'javascript', 'dart']}}
-NeoBundle 'powerline', {'rtp': 'powerline/bindings/vim/'}
-NeoBundle 'python-mode', {'lazy': 1, 'autoload': {'filetypes': ['python']}}
-NeoBundle 'vim-css3-syntax', {'lazy': 1, 'autoload': {'filetypes': ['css', 'scss']}}
-NeoBundle 'vim-signify', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
-NeoBundle 'vim-fugitive'
-NeoBundle 'vim-javascript', {'lazy': 1, 'autoload': {'filetypes': ['javascript', 'html']}}
-NeoBundle 'vim-indent-guides'
-NeoBundle 'nerdcommenter', { 'lazy': 1, 'autoload' : { 'insert': 1 } }
-NeoBundle 'vim-browser-reload-linux'
-NeoBundle 'editorconfig'
-NeoBundle 'ctrlp-py-matcher'
-NeoBundle 'rainbow', {'lazy': 1, 'autoload': {'filetypes': ['dart']}}
-NeoBundle 'vim-glsl'
+" Set cursor shape
+let &t_SI = "\<Esc>[6 q"
+let &t_EI = "\<Esc>[2 q"
+if v:version > 704 || v:version == 704 && has('patch687')
+	let &t_SR = "\<Esc>[4 q"
+end
 
-NeoBundle 'dart-vim-plugin'
-NeoBundle 'vim-flutter'
+" Complete shortcuts
+imap <C-Space> <C-X><C-I>
+imap <Nul> <C-X><C-I>
 
-" NeoBundle 'vim-fugitive', { 'lazy': 1, 'autoload': { 'commands': ['Gstatus', 'Gcommit', 'Gwrite', 'Git', 'Git!', 'Gcd', 'Glcd', 'Ggrep', 'Glog', 'Gblame', 'Gdiff'] } }
 
-call neobundle#end()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+let s:plugins = {}
+
+" Returns plugin settings
+function s:getPluginSettings(name)
+	if ! has_key(s:plugins, a:name)
+		let s:plugins[a:name] = {'run_pre': [], 'run_post': []}
+	endif
+
+	return s:plugins[a:name]
+endfunction
+
+" Load plugin a reutnr pre / post init scripts
+function s:loadPlugin(name)
+	let settings = s:getPluginSettings(a:name)
+	if has_key(settings, "loaded")
+		return
+	endif
+
+	let settings["loaded"] = 1
+
+	" Run pre scripts
+	for Fn in settings['run_pre']
+		call Fn()
+	endfor
+
+	" Load plugin
+	execute "packadd " . a:name
+
+	" Return post scripts
+	for Fn in settings['run_post']
+		call Fn()
+	endfor
+endfunction
+
+" Register pre script for plugin
+function s:pluginPre(name, fn)
+	let settings = s:getPluginSettings(a:name)
+	call add(settings['run_pre'], a:fn)
+endfunction
+
+" Register post script for plugin
+function s:pluginPost(name, fn)
+	let settings = s:getPluginSettings(a:name)
+	call add(settings['run_post'], a:fn)
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Individual plugins
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+" YouCompleteMe
+
+function s:init_YouCompleteMe()
+	let g:ycm_key_list_select_completion = ['<Down>']
+	let g:ycm_key_list_previous_completion = ['<Up>']
+	let g:ycm_confirm_extra_conf = 0
+
+	autocmd FileType python nmap <buffer> <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+	nmap <buffer> <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
+endfunction
+
+call s:pluginPre("YouCompleteMe", function("s:init_YouCompleteMe"))
+
+" ale
+
+function s:init_ale()
+	let g:ale_lint_on_text_changed = "never"
+	let g:ale_lint_on_enter = 0
+	let g:ale_lint_on_filetype_changed = 0
+	let g:ale_lint_on_save = 1
+	let g:ale_lint_on_insert_leave = 0
+endfunction
+
+call s:pluginPre("ale", function("s:init_ale"))
+
+
+" ctrlp
+
+function s:init_ctrlp()
+	unmap <c-p>
+	"let g:ctrlp_use_caching = 0
+	let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
+	let g:ctrlp_follow_symlinks = 1
+	let g:ctrlp_working_path_mode = 'raw'
+	if executable('ag')
+		let g:ctrlp_user_command = 'ag %s --ignore-case --nogroup --nocolor --hidden --follow
+			\ -U -p ~/.ignore
+			\ -l -m 50000
+			\ -g ""'
+	endif
+endfunction
+
+function s:init_ctrlp_py_matcher()
+	let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
+endfunction
+
+function s:init_ctrlp_py_matcher_post()
+	:CtrlP
+endfunction
+
+
+call s:pluginPre("ctrlp", function("s:init_ctrlp"))
+call s:pluginPre("ctrlp-py-matcher", function("s:init_ctrlp_py_matcher"))
+call s:pluginPost("ctrlp-py-matcher", function("s:init_ctrlp_py_matcher_post"))
+
+
+" gundo
+
+function s:init_gundo()
+	nunmap <F7>
+	let g:gundo_prefer_python3=1
+endfunction
+
+function s:init_gundo_post()
+	nmap <F7> :GundoToggle<CR>
+	"call feedkeys("\<F7>")
+	:GundoToggle
+endfunction
+
+call s:pluginPre("gundo", function("s:init_gundo"))
+call s:pluginPost("gundo", function("s:init_gundo_post"))
+
+
+" powerline
+
+set rtp+=$HOME/.vim/pack/plugins/start/powerline/powerline/bindings/vim
+
+" python-mode
+let g:pymode_options = 0
+let g:pymode_rope = 1
+let g:pymode_rope_completion = 0
+let g:pymode_rope_complete_on_dot = 0
+let g:pymode_rope_completion_bind = '<C-Shift-Space>'
+let g:pymode_indent = 0
+let g:pymode_syntax = 0
+let g:pymode_lint = 0
+let g:pymode_folding = 0
+let g:pymode_rope_autoimport = 1
+
+
+" ultisnips
+
+function s:init_ultisnips()
+	let g:UltiSnipsExpandTrigger="<TAB>"
+	let g:UltiSnipsJumpForwardTrigger="<TAB>"
+	let g:UltiSnipsSnippetDirectories = ['.vim/UltiSnips', 'UltiSnips']
+	let g:UltiSnipsTriggerInVisualMode=0
+endfunction
+
+
+call s:pluginPre("ultisnips", function("s:init_ultisnips"))
+
+" bufferlist
+"
+function s:init_bufferlist()
+	unmap <F3>
+endfunction
+
+function s:init_bufferlist_post()
+	map <silent> <F3> :call BufferList()<CR>
+	call BufferList()
+endfunction
+
+call s:pluginPre("vim-bufferlist", function("s:init_bufferlist"))
+call s:pluginPost("vim-bufferlist", function("s:init_bufferlist_post"))
+
+
+" tagbar
+
+function s:init_tagbar()
+	nunmap <F11>
+endfunction
+
+function s:init_tagbar_post()
+	nmap <F11> :TagbarToggle<CR>
+	:TagbarToggle
+endfunction
+
+call s:pluginPre("tagbar", function("s:init_tagbar"))
+call s:pluginPost("tagbar", function("s:init_tagbar_post"))
+
+
+" indent-guides
+
+let g:indent_guides_auto_colors = 0
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'project']
+let g:indent_guides_space_guides = 0
+let g:indent_guides_start_level = 1
+let g:indent_guides_indent_levels = 10
+
+
+" signify
+
+function s:init_signify_post()
+	:SignifyEnable
+endfunction
+
+call s:pluginPost("signify", function("s:init_signify_post"))
+
+
+" jsavascript
+
+function s:init_javascript()
+	let g:javascript_conceal = 1
+	let g:javascript_conceal_function   = "∫"
+	let g:javascript_conceal_null       = "Ø"
+	let g:javascript_conceal_this       = "@"
+	let g:javascript_conceal_return     = "❱"
+	let g:javascript_conceal_undefined  = "¿"
+	let g:javascript_conceal_NaN        = "Ṉ"
+	let g:javascript_conceal_prototype  = "¶"
+	let g:javascript_conceal_static     = "•"
+	let g:javascript_conceal_super      = "Ω"
+endfunction
+
+
+call s:pluginPre("vim-javascript", function("s:init_javascript"))
+
+
+"call s:loadPlugin("ultisnips")
+"call s:loadPlugin("vim-snippets")
+
+autocmd InsertEnter * ++once call s:loadPlugin("ultisnips")
+autocmd InsertEnter * ++once call s:loadPlugin("vim-snippets")
+autocmd InsertEnter * ++once call s:loadPlugin("YouCompleteMe")
+nmap <F12> :call <SID>loadPlugin("YouCompleteMe")<CR>:YcmCompleter GoToDefinitionElseDeclaration<CR>
+autocmd FileType javascript,python ++once call s:loadPlugin("ale")
+autocmd FileType python ++once call s:loadPlugin("killor")
+map <c-p> :call <SID>loadPlugin("ctrlp")<CR>:call <SID>loadPlugin("ctrlp-py-matcher")<CR>
+autocmd InsertEnter * ++once call s:loadPlugin("delimitMate")
+autocmd FileType html,htmldjango ++once call s:loadPlugin("emmet-vim")
+nmap <F7> :call <SID>loadPlugin("gundo")<CR>
+autocmd InsertEnter * ++once call s:loadPlugin("nerdcommenter")
+map <F3> :call <SID>loadPlugin("vim-bufferlist")<CR>
+nmap <F11> :call <SID>loadPlugin("tagbar")<CR>
+autocmd FileType css,scss ++once call s:loadPlugin("vim-css3-syntax")
+autocmd InsertEnter * ++once call s:loadPlugin("vim-signify")
+autocmd FileType javascript ++once call s:loadPlugin("vim-javascript")
+
 
 filetype indent on
 filetype plugin on
 
-" NeoBundleCheck
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Saving
@@ -179,14 +401,6 @@ let html_number_lines = 0
 let use_xhtml = 1
 let html_use_css = 1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Menu
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set wildmenu
-set wildchar=<Tab>
-set wildmode=longest:full,full
-set wildignore=Ui_*,*.git,*.pyc,*.qmlc
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Formating
@@ -261,6 +475,7 @@ endfunc
 
 command! -range=% ReformatHTML <line1>,<line2>call ReformatHTML()
 
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Snippets
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -283,6 +498,7 @@ vmap ; <ESC>`>a“<ESC>`<i„<ESC>gv
 
 " Reverse chars
 vmap \rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Display
@@ -369,241 +585,6 @@ autocmd InsertEnter *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhi
 autocmd InsertLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} match ExtraWhitespace /\s\+$\| \+\ze\t/
 autocmd BufWinLeave *{cpp,h,hpp,php,python,css,js,html,xhtml,htm} call clearmatches()
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Auto complete
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-set completeopt=menuone,menu
-"               |       |
-"               |       + Display popup
-"               + Display when single option
-
-" Hide help when cursor moved
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-" Set cursor shape
-let &t_SI = "\<Esc>[6 q"
-let &t_EI = "\<Esc>[2 q"
-if v:version > 704 || v:version == 704 && has('patch687')
-	let &t_SR = "\<Esc>[4 q"
-end
-
-" Complete shortcuts
-imap <C-Space> <C-X><C-I>
-imap <Nul> <C-X><C-I>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Plugin settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-if neobundle#tap('project.tar.gz') "{{{
-	function! neobundle#tapped.hooks.on_post_source(bundle)
-		nmap <F8> <Plug>ToggleProject
-	endfunction
-
-	let g:proj_flags="imstvcS"
-	"                 |||||||
-	"                 ||||||+ Sort
-	"                 |||||+ Close after select
-	"                 ||||+ Vimgrep instead of grep
-	"                 |||+ Window size
-	"                 ||+ Syntax
-	"                 |+ Ctrl+W O
-	"                 + File names in status line
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('YouCompleteMe') "{{{
-	autocmd FileType python nmap <buffer> <F12> :YcmCompleter GoToDefinitionElseDeclaration<CR>
-
-	let g:ycm_key_list_select_completion = ['<Down>']
-	let g:ycm_key_list_previous_completion = ['<Up>']
-	let g:ycm_confirm_extra_conf=0
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('a.vim') "{{{
-	autocmd FileType c,cpp map <buffer> <F12> :A<CR>
-	autocmd FileType c,cpp imap <buffer> <F12> <ESC>:A<CR>
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('tagbar') "{{{
-	function! neobundle#tapped.hooks.on_post_source(bundle)
-		nmap <F11> :TagbarToggle<CR>
-	endfunction
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('gundo.vim') "{{{
-	let g:gundo_prefer_python3=1
-	function! neobundle#tapped.hooks.on_post_source(bundle)
-		nmap <F7> :GundoToggle<CR>
-	endfunction
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('vim-bufferlist') "{{{
-	function! neobundle#tapped.hooks.on_post_source(bundle)
-		map <silent> <F3> :call BufferList()<CR>
-	endfunction
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('ultisnips') "{{{
-	"function! neobundle#hooks.on_source(bundle)
-	"function! neobundle#tapped.hooks.on_post_source(bundle)
-	"	silent! call UltiSnips#FileTypeChanged()
-	"	au BufEnter * call UltiSnips#FileTypeChanged()
-	"endfunction
-	let g:UltiSnipsExpandTrigger="<TAB>"
-	let g:UltiSnipsJumpForwardTrigger="<TAB>"
-	let g:UltiSnipsSnippetDirectories = ['.vim/UltiSnips', 'UltiSnips']
-	let g:UltiSnipsTriggerInVisualMode=0
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('ale') "{{{
-	let g:ale_lint_on_text_changed="never"
-	let g:ale_lint_on_enter=0
-	let g:ale_lint_on_filetype_changed=0
-	let g:ale_lint_on_save=1
-	let g:ale_lint_on_insert_leave=0
-endif
-"}}}
-
-if neobundle#tap('python-mode') "{{{
-	let g:pymode_options = 0
-	let g:pymode_rope = 1
-	let g:pymode_rope_completion = 0
-	let g:pymode_rope_complete_on_dot = 0
-	let g:pymode_rope_completion_bind = '<C-Shift-Space>'
-	let g:pymode_indent = 0
-	let g:pymode_syntax = 0
-	let g:pymode_lint = 0
-	let g:pymode_folding = 0
-	let g:pymode_rope_autoimport = 1
-endif
-"}}}
-
-if neobundle#tap('vim-indent-guides') "{{{
-	let g:indent_guides_auto_colors = 0
-	let g:indent_guides_enable_on_vim_startup = 1
-	let g:indent_guides_exclude_filetypes = ['help', 'nerdtree', 'project']
-	let g:indent_guides_space_guides = 0
-	let g:indent_guides_start_level = 1
-	let g:indent_guides_indent_levels = 10
-	call neobundle#untap()
-endif
-"}}}
-
-if neobundle#tap('vim-javascript') "{{{
-	let g:javascript_conceal = 1
-	let g:javascript_conceal_function   = "∫"
-	let g:javascript_conceal_null       = "Ø"
-	let g:javascript_conceal_this       = "@"
-	let g:javascript_conceal_return     = "❱"
-	let g:javascript_conceal_undefined  = "¿"
-	let g:javascript_conceal_NaN        = "Ṉ"
-	let g:javascript_conceal_prototype  = "¶"
-	let g:javascript_conceal_static     = "•"
-	let g:javascript_conceal_super      = "Ω"
-endif
-"}}}
-
-if neobundle#tap('ctrlp.vim') "{{{
-	"let g:ctrlp_use_caching = 0
-	let g:ctrlp_cache_dir = $HOME . '/.cache/ctrlp'
-	let g:ctrlp_follow_symlinks = 1
-	let g:ctrlp_working_path_mode = 'raw'
-	if executable('ag')
-		let g:ctrlp_user_command = 'ag --ignore-case --nogroup --hidden --follow
-			\ -U -p ~/.ignore
-			\ -l -m 50000
-			\ %s -g ""'
-	endif
-endif
-"}}}
-
-if neobundle#tap('ctrlp-py-matcher') "{{{
-	let g:ctrlp_match_func = { 'match': 'pymatcher#PyMatch' }
-endif
-"}}}
-
-if neobundle#tap('vim-flutter') "{{{
-	" Enable Flutter menu
-	"call FlutterMenu()
-	
-	" Some of these key choices were arbitrary;
-	" it's just an example.
-	nnoremap <leader>fa :FlutterRun<cr>
-	nnoremap <leader>fq :FlutterQuit<cr>
-	nnoremap <leader>fr :FlutterHotReload<cr>
-	nnoremap <leader>fR :FlutterHotRestart<cr>
-	nnoremap <leader>fD :FlutterVisualDebug<cr>
-endif
-"}}}
-"
-"}}}
-
-if neobundle#tap('rainbow') "{{{
-	let g:rainbow_active = 1
-	let g:rainbow_conf = {
-	\	'guifgs': ['royalblue3', 'darkorange3', 'seagreen3', 'firebrick'],
-	\	'ctermfgs': ['45', '40', '190', '208', '196', '200', '141'],
-	\	'guis': [''],
-	\	'cterms': [''],
-	\	'operators': '_,_',
-	\	'contains_prefix': 'TOP',
-	\	'parentheses_options': '',
-	\	'parentheses': ['start=/(/ end=/)/ fold', 'start=/\[/ end=/\]/ fold', 'start=/{/ end=/}/ fold'],
-	\	'separately': {
-	\		'*': {},
-	\		'css': 0,
-	\		'sh': 0,
-	\	}
-	\}
-endif
-"}}}
-
-
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesOdd  guibg=#1c1c1c   ctermbg=234
-"autocmd VimEnter,Colorscheme * :hi IndentGuidesEven  guibg=#262626   ctermbg=235
-
-function Ultisnips_get_current_python_class()
-	let l:retval = ""
-	let l:line_declaring_class = search('^class\s\+', 'bnW')
-	if l:line_declaring_class != 0
-		let l:nameline = getline(l:line_declaring_class)
-		let l:classend = matchend(l:nameline, '\s*class\s\+')
-		let l:classnameend = matchend(l:nameline, '\s*class\s\+[A-Za-z0-9_]\+')
-		let l:retval = strpart(l:nameline, l:classend, l:classnameend-l:classend)
-	endif
-	return l:retval
-endfunction
-
-function Ultisnips_get_current_python_method()
-	let l:retval = ""
-	let l:line_declaring_method = search('\s*def\s\+', 'bnW')
-	if l:line_declaring_method != 0
-		let l:nameline = getline(l:line_declaring_method)
-		let l:methodend = matchend(l:nameline, '\s*def\s\+')
-		let l:methodnameend = matchend(l:nameline, '\s*def\s\+[A-Za-z0-9_]\+')
-		let l:retval = strpart(l:nameline, l:methodend, l:methodnameend-l:methodend)
-	endif
-	return l:retval
-endfunction
-
-
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Settings for file types
@@ -642,6 +623,7 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType html set completefunc=htmlcomplete#CompleteTags
 autocmd FileType html set filetype=htmldjango
 autocmd FileType htmldjango vmap \tr <ESC>`>a'' %}<ESC>`<i{{% trans ''<ESC>
+autocmd FileType htmldjango vmap \tj <ESC>:set paste<CR>`>a{% endtrans %}<ESC>`<i{% trans %}<ESC>`>:set nopaste<CR>
 
 " css
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
