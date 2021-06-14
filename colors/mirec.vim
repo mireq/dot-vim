@@ -6,7 +6,7 @@ if exists("syntax_on")
 	syntax reset
 endif
 
-let colors_name = "moja"
+let colors_name = "mirec"
 
 hi Boolean         ctermfg=7     guifg=#e5e5e5 gui=bold cterm=bold
 hi Character       ctermfg=181   guifg=#d7afaf gui=bold cterm=bold
