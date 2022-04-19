@@ -73,3 +73,9 @@
 [submodule "pack/plugins/opt/vim-signify"]
 	path = pack/plugins/opt/vim-signify
 	url = https://github.com/mhinz/vim-signify.git
+[submodule "pack/plugins/opt/po"]
+	path = pack/plugins/opt/po
+	url = https://github.com/vim-scripts/po.vim--Jelenak.git
+[submodule "pack/plugins/opt/vim-glsl"]
+	path = pack/plugins/opt/vim-glsl
+	url = https://github.com/tikhomirov/vim-glsl
