@@ -516,7 +516,7 @@ command! -range=% ReformatHTML <line1>,<line2>call ReformatHTML()
 imap \... …
 
 " Better completion for {
-inoremap {<CR>  {<CR>}<Esc>O
+inoremap {<CR>  {<CR><C-D>}<Esc>O
 
 " Disable delimitmate for file types
 let delimitMate_excluded_ft = "mail,txt,htmldjango"
@@ -653,6 +653,9 @@ au BufNewFile,BufRead *.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp set filet
 set indentkeys-=<:>
 
 let g:python_recommended_style=0
+let g:pyindent_open_paren = shiftwidth()
+let g:pyindent_continue = shiftwidth()
+let g:pyindent_close_paren = -shiftwidth()
 let g:rst_style=0
 
 " javascript
