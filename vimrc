@@ -67,9 +67,14 @@ set wrap
 set mouse=a
 set mousehide
 set mousemodel=popup
+set mouseshape=n-v-ve-o-i-r:beam
+set ttymouse=sgr
 
 " Integrate clipboard
 set clipboard=unnamed,unnamedplus
+
+" Menu inside command line
+set wildmenu
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -186,6 +191,7 @@ function s:init_ale()
 	let g:ale_lint_on_filetype_changed = 0
 	let g:ale_lint_on_save = 1
 	let g:ale_lint_on_insert_leave = 0
+	let g:ale_java_javac_classpath = '/opt/android-sdk/platforms/android-31/android.jar'
 endfunction
 
 call s:pluginPre("ale", function("s:init_ale"))
@@ -253,9 +259,34 @@ let g:pymode_syntax = 0
 let g:pymode_lint = 0
 let g:pymode_folding = 0
 let g:pymode_rope_autoimport = 1
+"let g:pymode_debug = 1
 
 
 " ultisnips
+
+function Ultisnips_get_current_python_class()
+	let l:retval = ""
+	let l:line_declaring_class = search('^class\s\+', 'bnW')
+	if l:line_declaring_class != 0
+		let l:nameline = getline(l:line_declaring_class)
+		let l:classend = matchend(l:nameline, '\s*class\s\+')
+		let l:classnameend = matchend(l:nameline, '\s*class\s\+[A-Za-z0-9_]\+')
+		let l:retval = strpart(l:nameline, l:classend, l:classnameend-l:classend)
+	endif
+	return l:retval
+endfunction
+
+function Ultisnips_get_current_python_method()
+	let l:retval = ""
+	let l:line_declaring_method = search('\s*def\s\+', 'bnW')
+	if l:line_declaring_method != 0
+		let l:nameline = getline(l:line_declaring_method)
+		let l:methodend = matchend(l:nameline, '\s*def\s\+')
+		let l:methodnameend = matchend(l:nameline, '\s*def\s\+[A-Za-z0-9_]\+')
+		let l:retval = strpart(l:nameline, l:methodend, l:methodnameend-l:methodend)
+	endif
+	return l:retval
+endfunction
 
 function s:init_ultisnips()
 	let g:UltiSnipsExpandTrigger="<TAB>"
@@ -342,7 +373,7 @@ autocmd InsertEnter * ++once call s:loadPlugin("ultisnips")
 autocmd InsertEnter * ++once call s:loadPlugin("vim-snippets")
 autocmd InsertEnter * ++once call s:loadPlugin("YouCompleteMe")
 nmap <F12> :call <SID>loadPlugin("YouCompleteMe")<CR>:YcmCompleter GoToDefinitionElseDeclaration<CR>
-autocmd FileType javascript,python ++once call s:loadPlugin("ale")
+autocmd FileType javascript,python,java ++once call s:loadPlugin("ale")
 autocmd FileType python ++once call s:loadPlugin("killor")
 map <c-p> :call <SID>loadPlugin("ctrlp")<CR>:call <SID>loadPlugin("ctrlp-py-matcher")<CR>
 autocmd InsertEnter * ++once call s:loadPlugin("delimitMate")
@@ -354,6 +385,8 @@ nmap <F11> :call <SID>loadPlugin("tagbar")<CR>
 autocmd FileType css,scss ++once call s:loadPlugin("vim-css3-syntax")
 autocmd InsertEnter * ++once call s:loadPlugin("vim-signify")
 autocmd FileType javascript ++once call s:loadPlugin("vim-javascript")
+autocmd FileType po ++once call s:loadPlugin("po")
+autocmd FileType glsl ++once call s:loadPlugin("vim-glsl")
 
 
 filetype indent on
@@ -369,10 +402,10 @@ filetype plugin on
 
 " Backup
 set backup
-set backupdir=~/.vim/backup,.,~/
+set backupdir=~/.vim/backup//,.,~/
 
 " Tmp directory
-set directory=~/.vim/tmp,~/tmp,.,/tmp
+set directory=~/.vim/tmp//,~/tmp,.,/tmp
 
 " Ask before close
 set confirm
@@ -384,7 +417,7 @@ set viminfo='50,\"500
 "            + Save max 50 files
 
 " Persistend undo
-set undodir=~/.vim/undodir
+set undodir=~/.vim/undodir//
 set undofile
 set undolevels=2048
 set undoreload=65538
@@ -521,6 +554,7 @@ set showmatch
 
 " Highlidhgt search
 set hlsearch
+set incsearch
 
 " Disable toolbars
 if has("gui_running")
@@ -534,7 +568,7 @@ syntax on
 set ttyfast
 
 " Fast regexp engine
-set regexpengine=1
+"set regexpengine=1
 
 " Automatic sync (slow!)
 " autocmd BufEnter * syntax sync fromstart
@@ -558,7 +592,8 @@ endif
 
 " Whitespace symbols
 if has("multi_byte")
-	set lcs=tab:\⁝\ ,trail:•,extends:>,precedes:<,nbsp:¤"
+	"set lcs=tab:\⁝\ ,trail:•,extends:>,precedes:<,nbsp:¤"
+	set lcs=tab:\┆\ ,trail:•,extends:>,precedes:<,nbsp:¤"
 	let &sbr = nr2char(8618).' '
 else
 	set lcs=tab:>\ ,extends:>,precedes:<,trail:-
@@ -607,12 +642,18 @@ autocmd FileType python setlocal complete+=k
 autocmd FileType python setlocal isk+=".,("
 autocmd BufRead *.py setlocal makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"
 autocmd BufRead *.py setlocal efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m
+"autocmd BufRead *.py let g:pymode_rope_project_root = finddir('.ropeproject', expand("<afile>"))
+"autocmd BufReadPre *.py let g:pymode_rope_project_root=finddir('.ropeproject', expand("<afile>"))
+"autocmd BufReadPre,BufNewFile *.py let f=expand("%:p:h") . ";" | let rope_dir=finddir(".ropeproject", f) | if rope_dir == "" || rope_dir == expand("$HOME/.ropeproject") | let g:pymode_rope_project_root="" | else | let rope_absdir=fnamemodify(rope_dir, ':p:h:h') | let g:pymode_rope_project_root=rope_absdir | endif
+autocmd BufReadPre,BufNewFile,BufEnter *.py if exists('b:pymode_rope_project_root') | let g:pymode_rope_project_root=b:pymode_rope_project_root | else | let f=expand("%:p:h") . ";" | let rope_dir=finddir(".ropeproject", f) | if rope_dir == "" || rope_dir == expand("$HOME/.ropeproject") | let b:pymode_rope_project_root="" | else | let rope_absdir=fnamemodify(rope_dir, ':p:h:h') | let b:pymode_rope_project_root=rope_absdir | endif | let g:pymode_rope_project_root=b:pymode_rope_project_root | endif
 au BufNewFile,BufRead *.jinja set ft=htmldjango
+au BufNewFile,BufRead *.vert,*.tesc,*.tese,*.glsl,*.geom,*.frag,*.comp set filetype=glsl
 
 " Disable indentkeys
 set indentkeys-=<:>
 
 let g:python_recommended_style=0
+let g:rst_style=0
 
 " javascript
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
@@ -659,6 +700,7 @@ endfunction
 function! ReformatXml()
 	%!xmllint --format --recover --encode utf-8 - 2>/dev/null
 endfunction
+command! ReformatXml call ReformatXml()
 
 function! ReplaceDiacritic()
 	execute "silent! " . a:firstline . "," . a:lastline . "s/Ľ/\\&#317;/g"
@@ -808,3 +850,55 @@ endfunction
 command W call WriteCreatingDirs()
 
 let c_no_curly_error = 1
+
+
+function s:MkNonExDir(file, buf)
+	if empty(getbufvar(a:buf, '&buftype')) && a:file!~#'\v^\w+\:\/'
+		let dir=fnamemodify(a:file, ':h')
+		if !isdirectory(dir)
+			call mkdir(dir, 'p')
+		endif
+	endif
+endfunction
+augroup BWCCreateDir
+	autocmd!
+	autocmd BufWritePre * :call s:MkNonExDir(expand('<afile>'), +expand('<abuf>'))
+augroup END
+
+
+" Protect large files from sourcing and other overhead.
+" Files become read only
+if !exists("my_auto_commands_loaded")
+  let my_auto_commands_loaded = 1
+  " Large files are > 10M
+  " Set options:
+  " eventignore+=FileType (no syntax highlighting etc
+  " assumes FileType always on)
+  " noswapfile (save copy of file)
+  " bufhidden=unload (save memory when other file is viewed)
+  " buftype=nowrite (file is read-only)
+  " undolevels=-1 (no undo possible)
+  let g:LargeFile = 1024 * 1024
+  augroup LargeFile
+    autocmd BufReadPre * let f=expand("<afile>") | if getfsize(f) > g:LargeFile | set eventignore+=FileType | setlocal noswapfile bufhidden=unload buftype=nowrite undolevels=-1 | else | set eventignore-=FileType | endif
+    augroup END
+ endif
+
+function! HTMLTextHighlight()
+	syntax off
+	syntax region comment start=/</ end=/>/
+	syntax region comment start=/</ end=/>/
+	syntax region comment start=/{%/ end=/%}/
+	syntax region comment start=/{{/ end=/}}/
+	syntax region comment start=/{#/ end=/#}/
+	syntax match Title /{%\s*\(end\)\?trans[^%]*%}/
+endfunction
+
+function! ChangeTimetrackPrompt()
+	let git_dir=system("cd -- ".expand("%:p:h::S")." && git rev-parse --absolute-git-dir")->split('\n', 1)[0]
+endfunction
+
+
+map <buffer> <leader>gh :0GlLog<CR>
+
+" :cexpr system('find . -name whatever.txt -printf "%p:1:1:%f\n"')
