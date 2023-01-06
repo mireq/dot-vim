@@ -20,8 +20,21 @@ endfunction
 nnoremap <buffer> <C-t> :call <SID>insertTime()<CR>
 inoremap <buffer> <C-t> <ESC>:call <SID>insertTime()<CR>i
 
-nnoremap <buffer> <C-r> a, refs <ESC>:call <SID>insertTime()<CR>
-inoremap <buffer> <C-r> , refs <ESC>:call <SID>insertTime()<CR>i
+nnoremap <buffer> <C-r> arefs <ESC>:call <SID>insertTime()<CR>
+inoremap <buffer> <C-r> refs <ESC>:call <SID>insertTime()<CR>i
 
-nnoremap <buffer> <C-c> a, closes <ESC>:call <SID>insertTime()<CR>
-inoremap <buffer> <C-c> , closes <ESC>:call <SID>insertTime()<CR>i
+nnoremap <buffer> <C-c> acloses <ESC>:call <SID>insertTime()<CR>
+inoremap <buffer> <C-c> closes <ESC>:call <SID>insertTime()<CR>i
+
+nnoremap <buffer> <C-e> aresolves <ESC>:call <SID>insertTime()<CR>
+inoremap <buffer> <C-e> resolves <ESC>:call <SID>insertTime()<CR>i
+
+inoreabbrev <buffer> BB BREAKING CHANGE:
+nnoremap <buffer> i i<C-r>=<sid>commit_type()<CR>
+
+fun! s:commit_type()
+	if col('.') == 1 && line('.') == 1
+		call complete(1, ['fix: ', 'feat: ', 'refactor: ', 'docs: ', 'test: '])
+	endif
+	return ''
+endfun
